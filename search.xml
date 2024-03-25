@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Kotlin的当下与未来</title>
+    <url>/posts/3067dd26.html</url>
+    <content><![CDATA[<h1 id="Kotlin的黄金时代"><a href="#Kotlin的黄金时代" class="headerlink" title="Kotlin的黄金时代"></a>Kotlin的黄金时代</h1><p>Kotlin从2016年正式发布以来,已经过去了8年,和其他主流语言相比，Kotlin毫无疑问是初出茅庐的一个新生语言，然而得益于JVM运行以及和Java的互操作性，使用Kotlin的开发者数量在短期内得到了可观的增长，尤其是Google在2019年宣布将Kotlin作为Android开发首选语言以后，越来越多的移动程序开发开始采用Kotlin。除此以外，Kotlin在跨平台、web开发等领域也有着不小的潜力，并且Kotlin也提供了协程、模式匹配（Java在Java 21才推出）等一些热门特性，可以说从发布至今一直是Kotlin的黄金时期<br><img src="https://onedrive.coolwindx.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/JavaVsKotlin.jpg" alt="Java vs Kotlin" title="Java vs Kotlin"></p>
+<h1 id="Kotlin以前的JVM生态"><a href="#Kotlin以前的JVM生态" class="headerlink" title="Kotlin以前的JVM生态"></a>Kotlin以前的JVM生态</h1><p>在Kotlin之前已经有Groovy、Scala等同样在JVM运行的语言，Groovy因缺乏不断的创造性而失去开发者的青睐，Scala由于主要维护人员离开而开始衰落，相比这两位前辈，Kotlin在创建之初就引入一系列特性，用时有着与Java更好的互操作性，另外Kotlin也不需要额外专门的构建工具(Scala需要sbt)，它的创建者是JetBrains，最流行的Java IDE的拥有者，Kotlin也因此在IDEA上获得了可靠支持。客观上来看，Kotlin克服了它的两位前辈的种种缺点，增加了特性并且拥有可靠的维护，成为了如今最能与Java匹敌的语言之一，然而它的未来依然是不确定的，因为它要和JVM食物链顶端的Java竞争<br><img src="https://onedrive.coolwindx.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/groovy.jpg" alt="Groovy" title="Groovy"> <img src="https://onedrive.coolwindx.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Scala.jpg" alt="Scala" title="Scala"></p>
+<h1 id="Kotlin的未来"><a href="#Kotlin的未来" class="headerlink" title="Kotlin的未来?"></a>Kotlin的未来?</h1><p>从网络上可以很容易地了解到，Kotlin相比Java语法更加简洁，并且提供了更好处理空指针的办法，提供了诸多Java没有的新特性。然而随着Java更新周期缩短，Java创新速度加快，Java 21已经有了比Kotlin更好的模式匹配支持，对于经验丰富的程序员来说，语言特性才是吸引他们的关键所在。现在的Kotlin太过年轻，Kotlin生态也远远不及Java生态，尽管互操作性让它兼容Java的一系列基础设施，然而那些终究是Java生态，如果Kotlin不能建立自己的生态，继续创新特性支持，那么它也就不可能继续和Java叫板了<br><img src="https://onedrive.coolwindx.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/JavaToKotlin.jpg" alt="Java to Kotlin" title="Java to Kotlin"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/4a17b156.html</url>
+    <content><![CDATA[<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World !"></a>Hello World !</h2><h3 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namesapce std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;hello world&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-20"><a href="#C-20" class="headerlink" title="C++20"></a>C++20</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;iostream&gt;;</span><br><span class="line"><span class="keyword">import</span> &lt;format&gt;;</span><br><span class="line"><span class="keyword">import</span> &lt;string&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string world &#123;<span class="string">&quot;world&quot;</span>&#125;;</span><br><span class="line">    cout &lt;&lt; format(<span class="string">&quot;hello &#123;&#125;&quot;</span>,world) &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-23"><a href="#C-23" class="headerlink" title="C++23"></a>C++23</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从C++17到C++23，<br>计算机的旅途正式开始！</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>洛谷P1563玩具谜题</title>
+    <url>/posts/d4183727.html</url>
+    <content><![CDATA[<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>最近闲来无聊又不想被算法✌薄纱，于是还是尝试性地参加一下算法竞赛，刷到P1563玩具谜题，一听另外一个算法卷王居然没刷这道题，于是好心地出篇题解😆</p>
+<h1 id="P1563-NOIP2016-提高组-玩具谜题"><a href="#P1563-NOIP2016-提高组-玩具谜题" class="headerlink" title="P1563 [NOIP2016 提高组] 玩具谜题"></a>P1563 [NOIP2016 提高组] 玩具谜题</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>小南有一套可爱的玩具小人，它们各有不同的职业。</p>
+<p>有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" alt="示例图"></p>
+<p>这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 3 个玩具小人的右数第 1个玩具小人的左数第 2个玩具小人那里。”</p>
+<p>小南发现，这个谜题中玩具小人的朝向非常关键，因为朝内和朝外的玩具小人的左右方向是相反的：面朝圈内的玩具小人，它的左边是顺时针方向，右边是逆时针方向；而面向圈外的玩具小人，它的左边是逆时针方向，右边是顺时针方向。</p>
+<p>小南一边艰难地辨认着玩具小人，一边数着:</p>
+<p>singer 朝内，左数第 3 个是 archer。</p>
+<p>archer 朝外，右数第 1个是 thinker。</p>
+<p>thinker 朝外，左数第 2 个是 writer。</p>
+<p>所以眼镜藏在 writer 这里！</p>
+<p>虽然成功找回了眼镜，但小南并没有放心。如果下次有更多的玩具小人藏他的眼镜，或是谜题的长度更长，他可能就无法找到眼镜了。所以小南希望你写程序帮他解决类似的谜题。这样的谜題具体可以描述为：</p>
+<p>有 n 个玩具小人围成一圈，已知它们的职业和朝向。现在第 1 个玩具小人告诉小南一个包含 m 条指令的谜題，其中第 Zi 条指令形如“向左数&#x2F;右数第 Si 个玩具小人”。你需要输出依次数完这些指令后，到达的玩具小人的职业。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入的第一行包含两个正整数 n,m，表示玩具小人的个数和指令的条数。</p>
+<p>接下来 n 行，每行包含一个整数和一个字符串，以<em><strong>逆时针为顺序</strong></em>给出每个玩具小人的朝向和职业。其中 0 表示朝向圈内，1表示朝向圈外。保证不会出现其他的数。字符串长度不超过 10 且仅由英文字母构成，字符串不为空，并且字符串两两不同。整数和字符串之间用一个空格隔开。</p>
+<p>接下来 <strong>m</strong> 行，其中第 <strong>i</strong> 行包含两个整数 ai ,si，表示第 <strong>i</strong> 条指令。若<strong>ai</strong>&#x3D;<strong>0</strong>，表示向左数 <strong>s</strong>i 个人；若 <strong>a</strong>i&#x3D;1，表示向右数 si 个人。 保证 ai 不会出现其他的数，1≤si&lt;n。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一个字符串，表示从第一个读入的小人开始，依次数完 <strong>m</strong> 条指令后到达的小人的职业。</p>
+<h2 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h2><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7 3</span><br><span class="line">0 singer</span><br><span class="line">0 reader</span><br><span class="line">0 mengbier </span><br><span class="line">1 thinker</span><br><span class="line">1 archer</span><br><span class="line">0 writer</span><br><span class="line">1 mogician </span><br><span class="line">0 3</span><br><span class="line">1 1</span><br><span class="line">0 2</span><br></pre></td></tr></table></figure>
+
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">writer</span><br></pre></td></tr></table></figure>
+
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> index &#123;&#125;; <span class="comment">//设置起始下标为0</span></span><br><span class="line">    pair&lt;<span class="type">int</span>,string&gt; arr[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i&#123;&#125;; i &lt; n; ++i) <span class="comment">//循环读入</span></span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; arr[i].first &gt;&gt; arr[i].second;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i&#123;&#125;; i &lt; m; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> direction,num;</span><br><span class="line">        cin &gt;&gt; direction &gt;&gt; num; </span><br><span class="line">        <span class="keyword">if</span> (direction == <span class="number">0</span>) <span class="comment">//向左数</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[index].first == <span class="number">0</span>) <span class="comment">//当前小人朝内</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">while</span> (num--) <span class="comment">//向左数n个</span></span><br><span class="line">                index--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">//当前小人朝外</span></span><br><span class="line">                <span class="keyword">while</span> (num--) </span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">//向右数</span></span><br><span class="line">            <span class="keyword">if</span> (arr[index].first == <span class="number">0</span>) <span class="comment">//当前小人朝内</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">while</span> (num--)</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">//当前小人朝外</span></span><br><span class="line">                <span class="keyword">while</span> (num--)</span><br><span class="line">                index--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (index &lt; <span class="number">0</span>) <span class="comment">//若下标向下越界</span></span><br><span class="line">            index = n + index; </span><br><span class="line">        <span class="keyword">while</span> (index &gt; n<span class="number">-1</span>) <span class="comment">//若下标向上越界</span></span><br><span class="line">            index = index - n;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; arr[index].second &lt;&lt; endl; <span class="comment">//输出更新完毕最后的下标内容</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+</search>
