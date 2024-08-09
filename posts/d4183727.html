@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>洛谷P1563玩具谜题 | 清風の小窝</title><meta name="author" content="暮色清風"><meta name="copyright" content="暮色清風"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="小记最近闲来无聊又不想被算法✌薄纱，于是还是尝试性地参加一下算法竞赛，刷到P1563玩具谜题，一听另外一个算法卷王居然没刷这道题，于是好心地出篇题解😆 题目描述小南有一套可爱的玩具小人，它们各有不同的职业。 有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：  这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 3 个玩具小人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="洛谷P1563玩具谜题">
+<meta property="og:url" content="https://blog.coolwind.top/posts/d4183727.html">
+<meta property="og:site_name" content="清風の小窝">
+<meta property="og:description" content="小记最近闲来无聊又不想被算法✌薄纱，于是还是尝试性地参加一下算法竞赛，刷到P1563玩具谜题，一听另外一个算法卷王居然没刷这道题，于是好心地出篇题解😆 题目描述小南有一套可爱的玩具小人，它们各有不同的职业。 有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：  这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 3 个玩具小人">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png">
+<meta property="article:published_time" content="2024-01-15T23:54:34.278Z">
+<meta property="article:modified_time" content="2024-02-03T19:32:40.021Z">
+<meta property="article:author" content="暮色清風">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png"><link rel="shortcut icon" href="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%B0%8F%E9%A3%8E%E8%BD%A6.png"><link rel="canonical" href="https://blog.coolwind.top/posts/d4183727.html"><link rel="preconnect" href="https://cdn.jsdmirror.com"/><link rel="preconnect" href="//www.clarity.ms"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="r1pPPpLUMF1Kk4VF8xTcKwcZI2CC2gQXQzKuY83o_qo"/><meta name="baidu-site-verification" content="codeva-F8vzeZA5Hc"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "lyiye4vi53");</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":3,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdmirror.com/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '洛谷P1563玩具谜题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-04 03:32:40'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="清風の小窝" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%8D%9A%E5%AE%A2%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png')"><nav id="nav"><span id="blog-info"><a href="/" title="清風の小窝"><span class="site-name">清風の小窝</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">洛谷P1563玩具谜题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-15T23:54:34.278Z" title="发表于 2024-01-16 07:54:34">2024-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-02-03T19:32:40.021Z" title="更新于 2024-02-04 03:32:40">2024-02-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="洛谷P1563玩具谜题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>最近闲来无聊又不想被算法✌薄纱，于是还是尝试性地参加一下算法竞赛，刷到P1563玩具谜题，一听另外一个算法卷王居然没刷这道题，于是好心地出篇题解😆</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>小南有一套可爱的玩具小人，它们各有不同的职业。</p>
+<p>有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" alt="示例图"></p>
+<p>这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 3 个玩具小人的右数第 1个玩具小人的左数第 2个玩具小人那里。”</p>
+<p>小南发现，这个谜题中玩具小人的朝向非常关键，因为朝内和朝外的玩具小人的左右方向是相反的：面朝圈内的玩具小人，它的左边是顺时针方向，右边是逆时针方向；而面向圈外的玩具小人，它的左边是逆时针方向，右边是顺时针方向。</p>
+<p>小南一边艰难地辨认着玩具小人，一边数着:</p>
+<p>singer 朝内，左数第 3 个是 archer。</p>
+<p>archer 朝外，右数第 1个是 thinker。</p>
+<p>thinker 朝外，左数第 2 个是 writer。</p>
+<p>所以眼镜藏在 writer 这里！</p>
+<p>虽然成功找回了眼镜，但小南并没有放心。如果下次有更多的玩具小人藏他的眼镜，或是谜题的长度更长，他可能就无法找到眼镜了。所以小南希望你写程序帮他解决类似的谜题。这样的谜題具体可以描述为：</p>
+<p>有 n 个玩具小人围成一圈，已知它们的职业和朝向。现在第 1 个玩具小人告诉小南一个包含 m 条指令的谜題，其中第 Zi 条指令形如“向左数&#x2F;右数第 Si 个玩具小人”。你需要输出依次数完这些指令后，到达的玩具小人的职业。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入的第一行包含两个正整数 n,m，表示玩具小人的个数和指令的条数。</p>
+<p>接下来 n 行，每行包含一个整数和一个字符串，以<em><strong>逆时针为顺序</strong></em>给出每个玩具小人的朝向和职业。其中 0 表示朝向圈内，1表示朝向圈外。保证不会出现其他的数。字符串长度不超过 10 且仅由英文字母构成，字符串不为空，并且字符串两两不同。整数和字符串之间用一个空格隔开。</p>
+<p>接下来 <strong>m</strong> 行，其中第 <strong>i</strong> 行包含两个整数 ai ,si，表示第 <strong>i</strong> 条指令。若<strong>ai</strong>&#x3D;<strong>0</strong>，表示向左数 <strong>s</strong>i 个人；若 <strong>a</strong>i&#x3D;1，表示向右数 si 个人。 保证 ai 不会出现其他的数，1≤si&lt;n。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一个字符串，表示从第一个读入的小人开始，依次数完 <strong>m</strong> 条指令后到达的小人的职业。</p>
+<h2 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h2><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">7 3</span><br><span class="line">0 singer</span><br><span class="line">0 reader</span><br><span class="line">0 mengbier </span><br><span class="line">1 thinker</span><br><span class="line">1 archer</span><br><span class="line">0 writer</span><br><span class="line">1 mogician </span><br><span class="line">0 3</span><br><span class="line">1 1</span><br><span class="line">0 2</span><br></pre></td></tr></table></figure>
+
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer</span><br></pre></td></tr></table></figure>
+
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> index &#123;&#125;; <span class="comment">//设置起始下标为0</span></span><br><span class="line">    pair&lt;<span class="type">int</span>,string&gt; arr[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i&#123;&#125;; i &lt; n; ++i) <span class="comment">//循环读入</span></span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; arr[i].first &gt;&gt; arr[i].second;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i&#123;&#125;; i &lt; m; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> direction,num;</span><br><span class="line">        cin &gt;&gt; direction &gt;&gt; num; </span><br><span class="line">        <span class="keyword">if</span> (direction == <span class="number">0</span>) <span class="comment">//向左数</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[index].first == <span class="number">0</span>) <span class="comment">//当前小人朝内</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">while</span> (num--) <span class="comment">//向左数n个</span></span><br><span class="line">                index--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">//当前小人朝外</span></span><br><span class="line">                <span class="keyword">while</span> (num--) </span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">//向右数</span></span><br><span class="line">            <span class="keyword">if</span> (arr[index].first == <span class="number">0</span>) <span class="comment">//当前小人朝内</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">while</span> (num--)</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">//当前小人朝外</span></span><br><span class="line">                <span class="keyword">while</span> (num--)</span><br><span class="line">                index--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (index &lt; <span class="number">0</span>) <span class="comment">//若下标向下越界</span></span><br><span class="line">            index = n + index; </span><br><span class="line">        <span class="keyword">while</span> (index &gt; n<span class="number">-1</span>) <span class="comment">//若下标向上越界</span></span><br><span class="line">            index = index - n;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; arr[index].second &lt;&lt; endl; <span class="comment">//输出更新完毕最后的下标内容</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.coolwind.top">暮色清風</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.coolwind.top/posts/d4183727.html">https://blog.coolwind.top/posts/d4183727.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.coolwind.top" target="_blank">清風の小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/3067dd26.html" title="Kotlin的当下与未来"><img class="cover" src="https://onedrive.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Kotlin的当下与未来</div></div></a></div><div class="next-post pull-right"><a href="/posts/4a17b156.html" title="Hello World"><img class="cover" src="https://onedrive.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/C%2B%2B.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/4a17b156.html" title="Hello World"><img class="cover" src="https://onedrive.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/C%2B%2B.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-11</div><div class="title">Hello World</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%8D%9A%E5%AE%A2%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">暮色清風</div><div class="author-info__description">日常摆烂的大学牲咸鱼</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/coolwindx" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:coolwind@coolwind.top" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://blog.coolwind.top/atom.xml" target="_blank" title="RSS"><i class="fa-solid fa-rss" style="color: #ffcccc;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">小记</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number"></span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number"></span> <span class="toc-text">输入格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number"></span> <span class="toc-text">输出格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%A0%B7%E4%BE%8B"><span class="toc-number"></span> <span class="toc-text">输入输出样例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5"><span class="toc-number">0.1.</span> <span class="toc-text">输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA"><span class="toc-number">0.2.</span> <span class="toc-text">输出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">题解</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/c7fc2994.html" title="IP查询-可用的离线IP数据库分享"><img src="https://onedrive.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/ip.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IP查询-可用的离线IP数据库分享"/></a><div class="content"><a class="title" href="/posts/c7fc2994.html" title="IP查询-可用的离线IP数据库分享">IP查询-可用的离线IP数据库分享</a><time datetime="2024-07-24T04:43:35.290Z" title="发表于 2024-07-24 12:43:35">2024-07-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/3067dd26.html" title="Kotlin的当下与未来"><img src="https://onedrive.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kotlin的当下与未来"/></a><div class="content"><a class="title" href="/posts/3067dd26.html" title="Kotlin的当下与未来">Kotlin的当下与未来</a><time datetime="2024-01-30T20:11:52.000Z" title="发表于 2024-01-31 04:11:52">2024-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/d4183727.html" title="洛谷P1563玩具谜题"><img src="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="洛谷P1563玩具谜题"/></a><div class="content"><a class="title" href="/posts/d4183727.html" title="洛谷P1563玩具谜题">洛谷P1563玩具谜题</a><time datetime="2024-01-15T23:54:34.278Z" title="发表于 2024-01-16 07:54:34">2024-01-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="https://onedrive.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/C%2B%2B.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2024-01-11T05:39:29.000Z" title="发表于 2024-01-11 13:39:29">2024-01-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By 暮色清風</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@4.13.0/source/js/utils.js"></script><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@4.13.0/source/js/main.js"></script><script src="https://cdn.jsdmirror.com/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'coolwindX/Blog',
+      'data-repo-id': 'R_kgDOJjc8IA',
+      'data-category-id': 'DIC_kwDOJjc8IM4CeN3c',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-mapping":"title","data-lang":"zh-CN","data-input-position":"top","data-strict":1,"data-reactions-enabled":1,"data-emit-metadata":1,"data-loading":"lazy","crossorigin":"anonymous"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@4.13.0/source/js/search/local-search.js"></script></div></div></body></html>
