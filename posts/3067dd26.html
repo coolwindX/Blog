@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Kotlin的当下与未来 | 清風の小窝</title><meta name="author" content="暮色清風"><meta name="copyright" content="暮色清風"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Kotlin自2016年发布以来，凭借与Java的良好互操作性和JVM平台支持，迅速获得关注。特别是2019年被Google选为Android开发首选语言后，使用量大增。相比Groovy和Scala，Kotlin更具优势，且提供了如协程等现代特性。尽管Java的生态更成熟，Kotlin的未来在于其创新能力和生态能否继续完善。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin的当下与未来">
+<meta property="og:url" content="https://blog.coolwind.top/posts/3067dd26.html">
+<meta property="og:site_name" content="清風の小窝">
+<meta property="og:description" content="Kotlin自2016年发布以来，凭借与Java的良好互操作性和JVM平台支持，迅速获得关注。特别是2019年被Google选为Android开发首选语言后，使用量大增。相比Groovy和Scala，Kotlin更具优势，且提供了如协程等现代特性。尽管Java的生态更成熟，Kotlin的未来在于其创新能力和生态能否继续完善。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg">
+<meta property="article:published_time" content="2024-01-30T20:11:52.000Z">
+<meta property="article:modified_time" content="2024-09-14T20:03:25.455Z">
+<meta property="article:author" content="暮色清風">
+<meta property="article:tag" content="Kotlin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg"><link rel="shortcut icon" href="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%B0%8F%E9%A3%8E%E8%BD%A6.png"><link rel="canonical" href="https://blog.coolwind.top/posts/3067dd26.html"><link rel="preconnect" href="https://cdn.jsdmirror.com"/><link rel="preconnect" href="//www.clarity.ms"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="r1pPPpLUMF1Kk4VF8xTcKwcZI2CC2gQXQzKuY83o_qo"/><meta name="baidu-site-verification" content="codeva-F8vzeZA5Hc"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "lyiye4vi53");</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":3,"unescape":true,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdmirror.com/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kotlin的当下与未来',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-15 04:03:25'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="清風の小窝" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%8D%9A%E5%AE%A2%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%B0%8F%E9%A3%8E%E8%BD%A6.png" alt="Logo"><span class="site-name">清風の小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">Kotlin的当下与未来</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Kotlin的当下与未来</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-30T20:11:52.000Z" title="发表于 2024-01-31 04:11:52">2024-01-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-14T20:03:25.455Z" title="更新于 2024-09-15 04:03:25">2024-09-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">552</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Kotlin的黄金时代"><a href="#Kotlin的黄金时代" class="headerlink" title="Kotlin的黄金时代"></a>Kotlin的黄金时代</h2><p>Kotlin从2016年正式发布以来,已经过去了8年,和其他主流语言相比，Kotlin毫无疑问是初出茅庐的一个新生语言，然而得益于JVM运行以及和Java的互操作性，使用Kotlin的开发者数量在短期内得到了可观的增长，尤其是Google在2019年宣布将Kotlin作为Android开发首选语言以后，越来越多的移动程序开发开始采用Kotlin。除此以外，Kotlin在跨平台、web开发等领域也有着不小的潜力，并且Kotlin也提供了协程、模式匹配（Java在Java 21才推出）等一些热门特性，可以说从发布至今一直是Kotlin的黄金时期<br><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/JavaVsKotlin.jpg" alt="Java vs Kotlin" title="Java vs Kotlin"></p>
+<h2 id="Kotlin以前的JVM生态"><a href="#Kotlin以前的JVM生态" class="headerlink" title="Kotlin以前的JVM生态"></a>Kotlin以前的JVM生态</h2><p>在Kotlin之前已经有Groovy、Scala等同样在JVM运行的语言，Groovy因缺乏不断的创造性而失去开发者的青睐，Scala由于主要维护人员离开而开始衰落，相比这两位前辈，Kotlin在创建之初就引入一系列特性，用时有着与Java更好的互操作性，另外Kotlin也不需要额外专门的构建工具(Scala需要sbt)，它的创建者是JetBrains，最流行的Java IDE的拥有者，Kotlin也因此在IDEA上获得了可靠支持。客观上来看，Kotlin克服了它的两位前辈的种种缺点，增加了特性并且拥有可靠的维护，成为了如今最能与Java匹敌的语言之一<br><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/groovy.jpg" alt="Groovy" title="Groovy"> <img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Scala.jpg" alt="Scala" title="Scala"></p>
+<h2 id="Kotlin的未来"><a href="#Kotlin的未来" class="headerlink" title="Kotlin的未来?"></a>Kotlin的未来?</h2><p>Kotlin相比Java语法更加简洁，存在大量的语法糖，并且提供了更好处理空指针的办法，提供了诸多Java没有的新特性。然而随着Java更新周期缩短，Java创新速度加快，Java 21已经有了比Kotlin更好的模式匹配支持，对于经验丰富的程序员来说，语言特性才是吸引他们的关键所在。现在的Kotlin太过年轻，Kotlin生态也远远不及Java生态，尽管互操作性让它兼容Java的一系列基础设施，然而那些终究是Java生态，Kotlin的未来更重要的是自身特性的创新和生态完善<br><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/JavaToKotlin.jpg" alt="Java to Kotlin" title="Java to Kotlin"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.coolwind.top">暮色清風</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.coolwind.top/posts/3067dd26.html">https://blog.coolwind.top/posts/3067dd26.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.coolwind.top" target="_blank">清風の小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Kotlin/">Kotlin</a></div><div class="post-share"><div class="social-share" data-image="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/c7fc2994.html" title="IP查询-可用的离线IP数据库分享"><img class="cover" src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/ip.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">IP查询-可用的离线IP数据库分享</div></div><div class="info-2"><div class="info-item-1">几个实用的离线数据库，包括IPIP.NET, GeoLite2, 纯真IP</div></div></div></a><a class="pagination-related" href="/posts/d4183727.html" title="洛谷P1563玩具谜题"><img class="cover" src="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">洛谷P1563玩具谜题</div></div><div class="info-2"><div class="info-item-1">洛谷P1563玩具谜题简单题解</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%8D%9A%E5%AE%A2%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">暮色清風</div><div class="author-info-description">日常摆烂的大学牲咸鱼</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/coolwindx" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:coolwind@coolwind.top" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://blog.coolwind.top/atom.xml" target="_blank" title="RSS"><i class="fa-solid fa-rss" style="color: #ffcccc;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Kotlin%E7%9A%84%E9%BB%84%E9%87%91%E6%97%B6%E4%BB%A3"><span class="toc-number">1.</span> <span class="toc-text">Kotlin的黄金时代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kotlin%E4%BB%A5%E5%89%8D%E7%9A%84JVM%E7%94%9F%E6%80%81"><span class="toc-number">2.</span> <span class="toc-text">Kotlin以前的JVM生态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kotlin%E7%9A%84%E6%9C%AA%E6%9D%A5"><span class="toc-number">3.</span> <span class="toc-text">Kotlin的未来?</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/c7fc2994.html" title="IP查询-可用的离线IP数据库分享"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/ip.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="IP查询-可用的离线IP数据库分享"/></a><div class="content"><a class="title" href="/posts/c7fc2994.html" title="IP查询-可用的离线IP数据库分享">IP查询-可用的离线IP数据库分享</a><time datetime="2024-07-24T04:43:35.290Z" title="发表于 2024-07-24 12:43:35">2024-07-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/3067dd26.html" title="Kotlin的当下与未来"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/Kotlin.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kotlin的当下与未来"/></a><div class="content"><a class="title" href="/posts/3067dd26.html" title="Kotlin的当下与未来">Kotlin的当下与未来</a><time datetime="2024-01-30T20:11:52.000Z" title="发表于 2024-01-31 04:11:52">2024-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/d4183727.html" title="洛谷P1563玩具谜题"><img src="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="洛谷P1563玩具谜题"/></a><div class="content"><a class="title" href="/posts/d4183727.html" title="洛谷P1563玩具谜题">洛谷P1563玩具谜题</a><time datetime="2024-01-15T23:54:34.278Z" title="发表于 2024-01-16 07:54:34">2024-01-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/C%2B%2B.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2024-01-11T05:39:29.000Z" title="发表于 2024-01-11 13:39:29">2024-01-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By 暮色清風</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@5.1.0/source/js/utils.js"></script><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@5.1.0/source/js/main.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdmirror.com/npm/katex@0.16.11/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdmirror.com/npm/katex@0.16.11/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script><script>(()=>{
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'coolwindX/Blog',
+      'data-repo-id': 'R_kgDOJjc8IA',
+      'data-category-id': 'DIC_kwDOJjc8IM4CeN3c',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-mapping":"title","data-lang":"zh-CN","data-input-position":"top","data-strict":1,"data-reactions-enabled":1,"data-emit-metadata":1,"data-loading":"lazy","crossorigin":"anonymous"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@5.1.0/source/js/search/local-search.js"></script></div></div></body></html>
