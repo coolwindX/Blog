@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>清風の小窝</title>
+  
+  <subtitle>一条咸鱼的碎碎念</subtitle>
+  <link href="https://blog.coolwind.top/atom.xml" rel="self"/>
+  
+  <link href="https://blog.coolwind.top/"/>
+  <updated>2025-03-04T03:34:18.181Z</updated>
+  <id>https://blog.coolwind.top/</id>
+  
+  <author>
+    <name>暮色清風</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo+Qexo部署---从零开始搭建Blog</title>
+    <link href="https://blog.coolwind.top/posts/32d09259.html"/>
+    <id>https://blog.coolwind.top/posts/32d09259.html</id>
+    <published>2025-03-02T00:24:05.769Z</published>
+    <updated>2025-03-04T03:34:18.181Z</updated>
+    
+    
+    <summary type="html">使用Github Page和Vercel部署Hexo + Qexo，零成本搭建小白的首个博客！</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="blog" scheme="https://blog.coolwind.top/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小C的数字倍数问题（难）</title>
+    <link href="https://blog.coolwind.top/posts/46766b1c.html"/>
+    <id>https://blog.coolwind.top/posts/46766b1c.html</id>
+    <published>2024-11-28T05:08:37.813Z</published>
+    <updated>2024-11-28T05:08:38.661Z</updated>
+    
+    
+    <summary type="html">全世界人的编程水平下降一万倍，只有我的水平保持不变！今天刷题刷上头了，又双叒叕看见一道难题`小C的数字倍数问题`，是公倍数公约数还是互质？点开定睛一看，居然是难度极高，史上无人能解的倍数难题，这一刻，全世界都炸了锅：&quot;什么？！他居然点开了数字倍数问题，这道题里无比繁杂的数学方法全世界能够掌握的人都寥寥无几！&quot;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://blog.coolwind.top/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="蒜法" scheme="https://blog.coolwind.top/tags/%E8%92%9C%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最大连续子数组和问题</title>
+    <link href="https://blog.coolwind.top/posts/8017087e.html"/>
+    <id>https://blog.coolwind.top/posts/8017087e.html</id>
+    <published>2024-11-28T04:10:49.611Z</published>
+    <updated>2024-11-28T04:21:09.062Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="算法" scheme="https://blog.coolwind.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="动态规划" scheme="https://blog.coolwind.top/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LangChain-快速开启大模型开发之旅(使用教程) </title>
+    <link href="https://blog.coolwind.top/posts/1f713a59.html"/>
+    <id>https://blog.coolwind.top/posts/1f713a59.html</id>
+    <published>2024-11-27T07:21:17.495Z</published>
+    <updated>2024-11-27T07:21:20.896Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在上一节&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="AI" scheme="https://blog.coolwind.top/tags/AI/"/>
+    
+    <category term="LangChain" scheme="https://blog.coolwind.top/tags/LangChain/"/>
+    
+    <category term="Python" scheme="https://blog.coolwind.top/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>LangChain-快速开启大模型开发之旅(介绍与安装)</title>
+    <link href="https://blog.coolwind.top/posts/283c35e6.html"/>
+    <id>https://blog.coolwind.top/posts/283c35e6.html</id>
+    <published>2024-11-26T01:47:05.126Z</published>
+    <updated>2024-11-26T01:47:10.097Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;LangChain是一个流行的大语言模型开发框架，使用MIT开源许可证，有着庞大的开发社区，支持多数主流大模型应用开发，可以简化模型应用开发周期。&lt;/p&gt;
+&lt;h1 id=&quot;LangChain-因何而来？&quot;&gt;&lt;a href=&quot;#LangChain-因何而来？&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="AI" scheme="https://blog.coolwind.top/tags/AI/"/>
+    
+    <category term="LangChain" scheme="https://blog.coolwind.top/tags/LangChain/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IP查询-可用的离线IP数据库分享</title>
+    <link href="https://blog.coolwind.top/posts/c7fc2994.html"/>
+    <id>https://blog.coolwind.top/posts/c7fc2994.html</id>
+    <published>2024-07-24T04:43:35.290Z</published>
+    <updated>2024-09-14T20:06:33.423Z</updated>
+    
+    
+    <summary type="html">几个实用的离线数据库，包括IPIP.NET, GeoLite2, 纯真IP</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="计算机网络" scheme="https://blog.coolwind.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="ip" scheme="https://blog.coolwind.top/tags/ip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kotlin的当下与未来</title>
+    <link href="https://blog.coolwind.top/posts/3067dd26.html"/>
+    <id>https://blog.coolwind.top/posts/3067dd26.html</id>
+    <published>2024-01-30T20:11:52.000Z</published>
+    <updated>2024-09-14T20:03:25.455Z</updated>
+    
+    
+    <summary type="html">Kotlin自2016年发布以来，凭借与Java的良好互操作性和JVM平台支持，迅速获得关注。特别是2019年被Google选为Android开发首选语言后，使用量大增。相比Groovy和Scala，Kotlin更具优势，且提供了如协程等现代特性。尽管Java的生态更成熟，Kotlin的未来在于其创新能力和生态能否继续完善。</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Kotlin" scheme="https://blog.coolwind.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>洛谷P1563玩具谜题</title>
+    <link href="https://blog.coolwind.top/posts/d4183727.html"/>
+    <id>https://blog.coolwind.top/posts/d4183727.html</id>
+    <published>2024-01-15T23:54:34.278Z</published>
+    <updated>2024-09-14T19:55:47.643Z</updated>
+    
+    
+    <summary type="html">洛谷P1563玩具谜题简单题解</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C++" scheme="https://blog.coolwind.top/tags/C/"/>
+    
+    <category term="算法" scheme="https://blog.coolwind.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://blog.coolwind.top/posts/4a17b156.html"/>
+    <id>https://blog.coolwind.top/posts/4a17b156.html</id>
+    <published>2024-01-11T05:39:29.000Z</published>
+    <updated>2024-09-17T22:38:50.595Z</updated>
+    
+    
+    <summary type="html">从C++98到C++23，C++见证计算机语言发展历程</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C++" scheme="https://blog.coolwind.top/tags/C/"/>
+    
+  </entry>
+  
+</feed>
