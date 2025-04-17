@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo+Qexo部署---从零开始搭建Blog | 清風の小窝</title><meta name="author" content="暮色清風"><meta name="copyright" content="暮色清風"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="使用Github Page和Vercel部署Hexo + Qexo，零成本搭建小白的首个博客！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo+Qexo部署---从零开始搭建Blog">
+<meta property="og:url" content="https://blog.coolwind.top/posts/32d09259.html">
+<meta property="og:site_name" content="清風の小窝">
+<meta property="og:description" content="使用Github Page和Vercel部署Hexo + Qexo，零成本搭建小白的首个博客！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pan.coolwind.top/OneDrive/pic/hexo.jpg">
+<meta property="article:published_time" content="2025-03-02T00:24:05.769Z">
+<meta property="article:modified_time" content="2025-03-04T03:34:18.181Z">
+<meta property="article:author" content="暮色清風">
+<meta property="article:tag" content="blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pan.coolwind.top/OneDrive/pic/hexo.jpg"><link rel="shortcut icon" href="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%B0%8F%E9%A3%8E%E8%BD%A6.png"><link rel="canonical" href="https://blog.coolwind.top/posts/32d09259.html"><link rel="preconnect" href="https://cdn.jsdmirror.com"/><link rel="preconnect" href="//www.clarity.ms"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="r1pPPpLUMF1Kk4VF8xTcKwcZI2CC2gQXQzKuY83o_qo"/><meta name="baidu-site-verification" content="codeva-F8vzeZA5Hc"/><link rel="stylesheet" href="/css/index.css?v=5.1.0"><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        if (name && globalFn[key][name]) return
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>(function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "lyiye4vi53");</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":3,"unescape":true,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdmirror.com/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo+Qexo部署---从零开始搭建Blog',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-04 11:34:18'
+}</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="清風の小窝" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%8D%9A%E5%AE%A2%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://pan.coolwind.top/OneDrive/pic/hexo.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%B0%8F%E9%A3%8E%E8%BD%A6.png" alt="Logo"><span class="site-name">清風の小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">Hexo+Qexo部署---从零开始搭建Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Hexo+Qexo部署---从零开始搭建Blog</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-02T00:24:05.769Z" title="发表于 2025-03-02 08:24:05">2025-03-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-04T03:34:18.181Z" title="更新于 2025-03-04 11:34:18">2025-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="关于Hexo和Qexo"><a href="#关于Hexo和Qexo" class="headerlink" title="关于Hexo和Qexo"></a>关于Hexo和Qexo</h3><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io/">Hexo</a>是一个 <code>快速、简洁且高效的博客框架</code></p>
+<p>此部署方案为全自动化方案，支持在线编辑发布博客文章，第一次部署流程较长，请耐心阅读<br>博客Hexo前端部署在Github上，一个私有库一个公共库，私有库存放博客源文件，当源文件检测到更改触发Github Action自动编译源文件并推送到公共库中生成Github Page(也可推送到其他静态网页托管商，例如Cloudflare Page)</p>
+<p>后端使用Qexo，部署在Vercel或者任意VPS上，Qexo提供博客文章管理和撰写，然后发布至Github博客源文件仓库</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/blog_flow.png" alt="博客架构流程"></p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>静态博客，维护简单，没有服务器负载压力，尽管专心写手头文章</li>
+<li>0成本，天天摸鱼也没有后顾之忧🥰</li>
+<li>主题种类丰富，可配置选项多</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>相比动态博客，交互性少一些，使用体验略低</li>
+<li>在线编辑文章需要独立后端，首次配置麻烦</li>
+</ul>
+<p>Qexo是一个 <code>美观、强大的静态博客管理器</code>，用于管理Hexo的博客文章</p>
+<h2 id="预先准备"><a href="#预先准备" class="headerlink" title="预先准备"></a>预先准备</h2><ul>
+<li>安装<a target="_blank" rel="noopener external nofollow noreferrer" href="https://mirrors.tuna.tsinghua.edu.cn/github-release/git-for-windows/git/LatestRelease/">Git</a>、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://nodejs.org/zh-cn/download/prebuilt-installer">Node.js</a></li>
+<li>一个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.github.com/">Github</a>账号</li>
+<li>一个<a target="_blank" rel="noopener external nofollow noreferrer" href="https://vercel.com/">Vercel</a>账号</li>
+<li>一个域名（可选）</li>
+</ul>
+<h2 id="本地搭建Hexo"><a href="#本地搭建Hexo" class="headerlink" title="本地搭建Hexo"></a>本地搭建Hexo</h2><h4 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h4><p>首先确保<strong>已经安装Node.js</strong><br>安装hexo的命令行工具和git部署工具，如果拉取速度过慢，自行查阅npm更换国内源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建本地环境"><a href="#创建本地环境" class="headerlink" title="创建本地环境"></a>创建本地环境</h4><p>创建一个文件夹，用做hexo的根目录并初始化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir hexo</span><br><span class="line">cd hexo</span><br><span class="line">hexo init</span><br><span class="line">npm install</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pan.coolwind.top/OneDrive/pic/hexo_init.png" alt="初始化hexo"><br>此时文件目录下一些比较重要的文件目录有</p>
+<ul>
+<li><code>./public</code>用于存放生成的静态网页文件</li>
+<li><code>./source</code>博客内容相关源文件，如 <code>./source/_post</code>是博客文章markdown源文件</li>
+<li><code>./theme</code>博客主题</li>
+<li><code>./_config.yml</code>博客配置文件，类似的 <code>./_config.xxx.yml</code>为主题配置文件</li>
+<li>剩余的为环境相关的文件，与博客内容无关</li>
+</ul>
+<p>本地启动测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>此时会在本地启动一个临时服务器供用户预览，点击提示链接 <code>http://localhost:4000/</code>访问</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/test.png" alt="测试页面"></p>
+<h3 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h3><p>首先确保<strong>已经安装git</strong>，接下来连接github，请自行确定网络环境以及openssh工具的正常</p>
+<p>配置git</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;你的Github用户名&quot;</span><br><span class="line">git config --global user.email &quot;你的Github邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成密钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh/</span><br><span class="line">ssh-keygen -t ed25519 -C &quot;你的邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pan.coolwind.top/OneDrive/pic/ssh-keygen.png" alt="生成密钥"></p>
+<p>一路回车就行了，生成的key会保存在你的用户文件夹中的 <code>.ssh</code>文件夹下，公钥为 <code>id_xxx.pub</code>的文件</p>
+<p>接下来登录Github，在 <code>Settings -&gt; SSH and GPG keys -&gt; new SSH keys</code>选择 <code>Authentication Key</code>上传公钥内容</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/github-ssh.png" alt="Github上传公钥"></p>
+<p>测试连接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>确认之后如果有 <code>Hi xxx! ...</code>的输出，就证明已经连接上了github，此时可以访问存储库进行操作</p>
+<p>接着在github上创建一个公有仓库 <code>Blog</code>，用来存放博客静态文件<br><img src="https://pan.coolwind.top/OneDrive/pic/repo2.jpg" alt="Blog仓库创建"></p>
+<h4 id="配置hexo-deploy"><a href="#配置hexo-deploy" class="headerlink" title="配置hexo-deploy"></a>配置hexo-deploy</h4><p>安装hexo-deploy工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>编辑hexo目录中的配置文件 <code>_config.yaml</code>，在末尾加入以下内容（这里使用的）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:你的用户名/仓库名.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>一键部署至Github</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>至此，手动部署的流程已经完成，可以使用以下命令新建文章</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;新文章&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成的文章会保存在本地 <code>./source/_post</code>下面，然后使用文本编辑器手动编辑完成后再一键部署至Github</p>
+<h4 id="主题安装-Butterfly"><a href="#主题安装-Butterfly" class="headerlink" title="主题安装(Butterfly)"></a>主题安装(Butterfly)</h4><p>原始的hexo主题如上面的测试页面，hexo还有大量社区维护的主题包，这里只介绍<a target="_blank" rel="noopener external nofollow noreferrer" href="https://butterfly.js.org/">Butterfly</a>，其余主题请自行搜索安装</p>
+<p>在hexo目录下输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
+
+<p>在hexo根目录下的 <code>_config.yml</code>配置文件中把 <code>theme</code>改为 <code>butterfly</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+
+<p>在 hexo 的根目录创建一个文件 <code> _config.butterfly.yml</code>，并把 <code>theme/butterfly</code>主题目录的 _config.yml 内容复制到 <code>_config.butterfly.yml</code> 去。</p>
+<p>到这里Butterfly已经安装完毕，可以继续进行教程，后续主题配置请自行参考butterfly官网在 <code>_config.butterfly.yml</code>中进一步设置</p>
+<h4 id="配置Github-Page"><a href="#配置Github-Page" class="headerlink" title="配置Github Page"></a>配置Github Page</h4><p>进入Github仓库，<code>Settings-&gt;Pages</code>,在 <code>source</code>一栏选择 <code>Deploy from a brach</code>,在下方 <code>branch</code>选择 <code>main-&gt;root</code>，这样设置以后，仓库会在监测到提交后自动把仓库内的静态页面文件部署为Github Page，并免费提供一个子域名访问，如有需要可以在下方 <code>Custom Domain</code>配置自定义域名</p>
+<h2 id="部署Hexo到Github实现自动化"><a href="#部署Hexo到Github实现自动化" class="headerlink" title="部署Hexo到Github实现自动化"></a>部署Hexo到Github实现自动化</h2><p>如前所述，本地部署Hexo是通过在本地编写markdown生成静态页面，再将静态页面推送到Github仓库生成Page. 接下来我们将把Hexo本地部分源文件上传到Github仓库，利用Github Action进一步实现自动化</p>
+<p>首先新建私有仓库 <code>Blog-Source</code>，用于存放Hexo源文件<br><img src="https://pan.coolwind.top/OneDrive/pic/repo1.jpg" alt="Blog-Source仓库创建"></p>
+<p>先连接 <code>Blog-Source</code>存储库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:你的用户名/你的存储库名称.git</span><br></pre></td></tr></table></figure>
+
+<p>连接上后，再复制部分本地hexo文件夹下的必要文件到 <code>Blog-Source</code>下</p>
+<p>建议在此时已经至少选择好主题并下载，此处的 <code>_config.xxx.yml</code>和 <code>themes</code>为主题文件</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/necessary.jpg" alt="Blog-Source本地文件"></p>
+<h3 id="配置Github-Action"><a href="#配置Github-Action" class="headerlink" title="配置Github Action"></a>配置Github Action</h3><p>首先在Github -&gt; Blog-Source -&gt; Actions 中启用Github Action，再在本地 <code>Blog-Source/.github/workflows</code>下添加一个Github Action的配置文件 <code>main.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Blog</span> <span class="string">CI/CD</span> <span class="comment"># 脚本 workflow 名称</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [<span class="string">main</span>, <span class="string">master</span>] <span class="comment"># 当监测 main,master 的 push</span></span><br><span class="line">    <span class="attr">paths:</span> <span class="comment"># 监测所有 source 目录下的文件变动，所有 yml,json 后缀文件的变动。</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;*.json&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;**.yml&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;**/source/**&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">blog:</span> <span class="comment"># 任务名称</span></span><br><span class="line">    <span class="attr">timeout-minutes:</span> <span class="number">30</span> <span class="comment"># 设置 30 分钟超时</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span> <span class="comment"># 指定最新 ubuntu 系统</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment"># 拉取仓库代码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span> <span class="comment"># 设置 node.js 环境</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">node_modules</span> <span class="comment"># 缓存 node_modules，提高编译速度，毕竟每月只有 2000 分钟。</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/cache@v4</span> <span class="comment"># 亲测 Github 服务器编译速度比我自己电脑都快，如果每次构建按5分钟计算，我们每个月可以免费部署 400 次，Github yyds！！！</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">cache-name:</span> <span class="string">cache-node-modules</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">~/.npm</span></span><br><span class="line">          <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-build-$&#123;&#123;</span> <span class="string">env.cache-name</span> <span class="string">&#125;&#125;-$&#123;&#123;</span> <span class="string">hashFiles(&#x27;**/package-lock.json&#x27;)</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.os &#125;&#125;-build-$&#123;&#123; env.cache-name &#125;&#125;-</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.os &#125;&#125;-build-</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.os &#125;&#125;-</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Init</span> <span class="string">Node.js</span> <span class="comment"># 安装源代码所需插件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install</span></span><br><span class="line"><span class="string">          echo &quot;init node successful&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Hexo-cli</span> <span class="string">And</span> <span class="string">component</span> <span class="comment"># 安装 Hexo</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install -g hexo-cli --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-sitemap --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-baidu-sitemap --save</span></span><br><span class="line"><span class="string">          npm install hexo-abbrlink --save</span></span><br><span class="line"><span class="string">          npm install hexo-renderer-pug hexo-renderer-stylus --save</span></span><br><span class="line"><span class="string">          npm i hexo-renderer-markdown-it --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-searchdb</span></span><br><span class="line"><span class="string">          npm install katex @renbaoshuo/markdown-it-katex</span></span><br><span class="line"><span class="string">          npm install hexo-wordcount --save</span></span><br><span class="line"><span class="string">          npm i hexo-filter-nofollow --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-feed --save</span></span><br><span class="line"><span class="string">          echo &quot;install hexo successful&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Blog</span> <span class="comment"># 编译创建静态博客文件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          hexo clean &amp;&amp; hexo g</span></span><br><span class="line"><span class="string">          echo &quot;build blog successful&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Blog</span> <span class="comment"># 设置 git 信息并推送静态博客文件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          cd ./public</span></span><br><span class="line"><span class="string">          git init</span></span><br><span class="line"><span class="string">          git config user.name &quot;$&#123;&#123;secrets.GIT_NAME&#125;&#125;&quot;</span></span><br><span class="line"><span class="string">          git config user.email &quot;$&#123;&#123;secrets.GIT_EMAIL&#125;&#125;&quot;</span></span><br><span class="line"><span class="string">          git add .</span></span><br><span class="line"><span class="string">          git commit -m &quot;Update&quot;</span></span><br><span class="line"><span class="string">          git push --force --quiet &quot;https://$&#123;&#123;secrets.GH_TOKEN&#125;&#125;@$&#123;&#123;secrets.GH_REF&#125;&#125;&quot; master:main</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">echo</span> <span class="string">&quot;Deploy Successful!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里请注意，由于我直接粘贴的自己的配置文件，所以在名为 <code>Install Hexo-cli And component</code>的任务下方有大量npm包的安装，这些除了前文所述的hexo安装以外，还有额外的一些插件模块，不过由于这些命令直接运行在Github Action的服务器上，所以此处不会产生明显可见的开销，后续搭建完成后自行进一步配置hexo时需要额外插件时请记得在这里检查并加入所需插件</p>
+<h3 id="配置存储库-Secrets"><a href="#配置存储库-Secrets" class="headerlink" title="配置存储库 Secrets"></a>配置存储库 Secrets</h3><p>出于安全考虑，在上方Github Action的配置文件 <code>Deploy Blog</code>中引用了4个 <code>Secret</code>，分别是 <code>GIT_NAME</code>, <code>GIT_EMAIL</code>, <code>GH_TOKEN</code>, <code>GH_REF</code>, 接下来将在存储库中设置它们</p>
+<p>在 Github -&gt; Blog-Source -&gt; Settings -&gt; Secrets and variables -&gt; Actions -&gt; Secrets 中添加用于Github Action的Secrets</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/action_secret.png" alt="Blog-Source存储库Secrets配置"></p>
+<p>Secrets的名称分别是上方 <code>GIT_NAME</code>, <code>GIT_EMAIL</code>, <code>GH_TOKEN</code>, <code>GH_REF</code><br>而Secrets的内容 <code>GIT_NAME</code>的就是Github账号的用户名，<code>GIT_EMAIL</code>就是Github账号所使用的邮箱</p>
+<p><code>GH_TOKEN</code>需要在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/settings/tokens">Github -&gt; Settings -&gt; Personal Access tokens</a>获取，选择生成 <code>classic</code>的token，为了简便可以把token过期时间设置为永不过期，权限范围勾选repo和workflow</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/access_token.png" alt="github token配置"></p>
+<p>生成的token即为 <code>GH_TOKEN</code>的内容</p>
+<p><code>GH_REF</code>的内容为 <code>github.com/用户名/Blog仓库名.git</code><br>请注意！！！这里的仓库是之前的用于存放静态页面文件的Blog仓库名称，而不是存放hexo源文件的Blog-Source仓库名</p>
+<p>Secrets设置完毕后可以同步本地Blog-Source更改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;init&quot;</span><br><span class="line">git push -u</span><br></pre></td></tr></table></figure>
+
+<p>完成之后应该可以在Github -&gt; Blog-Source里面看到刚才的文件， 此时可以编辑本地 &#x2F;Blog-Source&#x2F;source&#x2F;post 里面的文章，再使用上述命令提交，到Github Blog-Source仓库查看Github Action是否正常运行</p>
+<h2 id="通过-Vercel-部署-Qexo"><a href="#通过-Vercel-部署-Qexo" class="headerlink" title="通过 Vercel 部署 Qexo"></a>通过 Vercel 部署 Qexo</h2><h3 id="一键部署"><a href="#一键部署" class="headerlink" title="一键部署"></a>一键部署</h3><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://vercel.com/new/clone?repository-url=https://github.com/am-abudu/Qexo"><img src="https://vercel.com/button" alt="vercel deploy"></a><br>首次部署会报错, 请无视并进行接下来的步骤</p>
+<h3 id="配置Vercel-PostgreSQL"><a href="#配置Vercel-PostgreSQL" class="headerlink" title="配置Vercel PostgreSQL"></a>配置Vercel PostgreSQL</h3><p>点击 Storage -&gt; Create Database -&gt; Neon (PostgreSQL)，选择Washington, D.C., USA (East) - iad1位置的数据库，创建完毕后点击Connect Project 连接到你第一步创建的项目</p>
+<p>点击Overview回到刚才创建的项目，Development -&gt; Redeploy，等待配置完成若没有错误即可进入初始化引导</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/redeploy_qexo.png" alt="重新部署qexo"></p>
+<h3 id="自定义Vercel域名"><a href="#自定义Vercel域名" class="headerlink" title="自定义Vercel域名"></a>自定义Vercel域名</h3><p>在上方创建的vercel项目中，点击 Settings-&gt; Domains添加自定义域名，通过CNAME解析到vercel即可使用自定义域名访问</p>
+<h3 id="Qexo初始化配置"><a href="#Qexo初始化配置" class="headerlink" title="Qexo初始化配置"></a>Qexo初始化配置</h3><p><img src="https://pan.coolwind.top/OneDrive/pic/qexo_init.png" alt="qexo配置"></p>
+<p>Github密钥即为之前在Blog-Source中Secret填入的 <code>GH_TOKEN</code>的值，没有保存也可按上方再申请一个，这里的Github仓库为存储hexo源文件的仓库，格式为 <code>用户名/仓库名</code>，项目分支 <code>main</code></p>
+<p>设置完毕应该可进入Qexo，至此Blog搭建完成，可以直接在Qexo上撰写文章，有关Qexo和Hexo以及主题的配置，请自行查阅官方网站</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/qexo.jpg" alt="qexo主界面"></p>
+<p>最后再来回顾一下此方案的运行过程</p>
+<p><img src="https://pan.coolwind.top/OneDrive/pic/blog_flow.png" alt="博客架构流程"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.coolwind.top">暮色清風</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.coolwind.top/posts/32d09259.html">https://blog.coolwind.top/posts/32d09259.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.coolwind.top" target="_blank">清風の小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/blog/">blog</a></div><div class="post-share"><div class="social-share" data-image="https://pan.coolwind.top/OneDrive/pic/hexo.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/46766b1c.html" title="小C的数字倍数问题（难）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">小C的数字倍数问题（难）</div></div><div class="info-2"><div class="info-item-1">全世界人的编程水平下降一万倍，只有我的水平保持不变！今天刷题刷上头了，又双叒叕看见一道难题`小C的数字倍数问题`，是公倍数公约数还是互质？点开定睛一看，居然是难度极高，史上无人能解的倍数难题，这一刻，全世界都炸了锅："什么？！他居然点开了数字倍数问题，这道题里无比繁杂的数学方法全世界能够掌握的人都寥寥无几！"</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/%E5%8D%9A%E5%AE%A2%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">暮色清風</div><div class="author-info-description">日常摆烂的大学牲咸鱼</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/coolwindx" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:coolwind@coolwind.top" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://blog.coolwind.top/atom.xml" target="_blank" title="RSS"><i class="fa-solid fa-rss" style="color: #ffcccc;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EHexo%E5%92%8CQexo"><span class="toc-number">1.</span> <span class="toc-text">关于Hexo和Qexo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%85%88%E5%87%86%E5%A4%87"><span class="toc-number"></span> <span class="toc-text">预先准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BAHexo"><span class="toc-number"></span> <span class="toc-text">本地搭建Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="toc-number">0.1.</span> <span class="toc-text">安装Hexo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83"><span class="toc-number">0.2.</span> <span class="toc-text">创建本地环境</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0Github"><span class="toc-number">1.</span> <span class="toc-text">部署到Github</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEhexo-deploy"><span class="toc-number">1.1.</span> <span class="toc-text">配置hexo-deploy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E5%AE%89%E8%A3%85-Butterfly"><span class="toc-number">1.2.</span> <span class="toc-text">主题安装(Butterfly)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEGithub-Page"><span class="toc-number">1.3.</span> <span class="toc-text">配置Github Page</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2Hexo%E5%88%B0Github%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-number"></span> <span class="toc-text">部署Hexo到Github实现自动化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEGithub-Action"><span class="toc-number">1.</span> <span class="toc-text">配置Github Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AD%98%E5%82%A8%E5%BA%93-Secrets"><span class="toc-number">2.</span> <span class="toc-text">配置存储库 Secrets</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-Vercel-%E9%83%A8%E7%BD%B2-Qexo"><span class="toc-number"></span> <span class="toc-text">通过 Vercel 部署 Qexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2"><span class="toc-number">1.</span> <span class="toc-text">一键部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEVercel-PostgreSQL"><span class="toc-number">2.</span> <span class="toc-text">配置Vercel PostgreSQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Vercel%E5%9F%9F%E5%90%8D"><span class="toc-number">3.</span> <span class="toc-text">自定义Vercel域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Qexo%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">Qexo初始化配置</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/32d09259.html" title="Hexo+Qexo部署---从零开始搭建Blog"><img src="https://pan.coolwind.top/OneDrive/pic/hexo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo+Qexo部署---从零开始搭建Blog"/></a><div class="content"><a class="title" href="/posts/32d09259.html" title="Hexo+Qexo部署---从零开始搭建Blog">Hexo+Qexo部署---从零开始搭建Blog</a><time datetime="2025-03-02T00:24:05.769Z" title="发表于 2025-03-02 08:24:05">2025-03-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/46766b1c.html" title="小C的数字倍数问题（难）">小C的数字倍数问题（难）</a><time datetime="2024-11-28T05:08:37.813Z" title="发表于 2024-11-28 13:08:37">2024-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/8017087e.html" title="最大连续子数组和问题">最大连续子数组和问题</a><time datetime="2024-11-28T04:10:49.611Z" title="发表于 2024-11-28 12:10:49">2024-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/1f713a59.html" title="LangChain-快速开启大模型开发之旅(使用教程) "><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/langchain.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LangChain-快速开启大模型开发之旅(使用教程) "/></a><div class="content"><a class="title" href="/posts/1f713a59.html" title="LangChain-快速开启大模型开发之旅(使用教程) ">LangChain-快速开启大模型开发之旅(使用教程) </a><time datetime="2024-11-27T07:21:17.495Z" title="发表于 2024-11-27 15:21:17">2024-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/283c35e6.html" title="LangChain-快速开启大模型开发之旅(介绍与安装)"><img src="https://pan.coolwind.top/OneDrive/%E5%9B%BE%E7%89%87/%E5%9B%BE%E5%BA%8A/langchain.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LangChain-快速开启大模型开发之旅(介绍与安装)"/></a><div class="content"><a class="title" href="/posts/283c35e6.html" title="LangChain-快速开启大模型开发之旅(介绍与安装)">LangChain-快速开启大模型开发之旅(介绍与安装)</a><time datetime="2024-11-26T01:47:05.126Z" title="发表于 2024-11-26 09:47:05">2024-11-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By 暮色清風</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@5.1.0/source/js/utils.js"></script><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@5.1.0/source/js/main.js"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdmirror.com/npm/katex@0.16.11/dist/katex.min.css')
+    if (true) {
+      await btf.getScript('https://cdn.jsdmirror.com/npm/katex@0.16.11/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script><script>(()=>{
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'coolwindX/Blog',
+      'data-repo-id': 'R_kgDOJjc8IA',
+      'data-category-id': 'DIC_kwDOJjc8IM4CeN3c',
+      'data-mapping': 'pathname',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-mapping":"title","data-lang":"zh-CN","data-input-position":"top","data-strict":1,"data-reactions-enabled":1,"data-emit-metadata":1,"data-loading":"lazy","crossorigin":"anonymous"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment= loadGiscus
+  }
+})()</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdmirror.com/npm/butterfly-extsrc@1.1.4/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdmirror.com/npm/hexo-theme-butterfly@5.1.0/source/js/search/local-search.js"></script></div></div></body></html>
