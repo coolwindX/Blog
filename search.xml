@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hexo+Qexo部署---从零开始搭建Blog</title>
+    <url>/posts/32d09259.html</url>
+    <content><![CDATA[<h3 id="关于Hexo和Qexo"><a href="#关于Hexo和Qexo" class="headerlink" title="关于Hexo和Qexo"></a>关于Hexo和Qexo</h3><p><a href="https://hexo.io/">Hexo</a>是一个 <code>快速、简洁且高效的博客框架</code></p>
+<p>此部署方案为全自动化方案，支持在线编辑发布博客文章，第一次部署流程较长，请耐心阅读<br>博客Hexo前端部署在Github上，一个私有库一个公共库，私有库存放博客源文件，当源文件检测到更改触发Github Action自动编译源文件并推送到公共库中生成Github Page(也可推送到其他静态网页托管商，例如Cloudflare Page)</p>
+<p>后端使用Qexo，部署在Vercel或者任意VPS上，Qexo提供博客文章管理和撰写，然后发布至Github博客源文件仓库</p>
+<p><img src="https://s2.loli.net/2025/07/14/sR5cWbK7hjH4LND.png" alt="博客架构流程"></p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>静态博客，维护简单，没有服务器负载压力，尽管专心写手头文章</li>
+<li>0成本，天天摸鱼也没有后顾之忧🥰</li>
+<li>主题种类丰富，可配置选项多</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>相比动态博客，交互性少一些，使用体验略低</li>
+<li>在线编辑文章需要独立后端，首次配置麻烦</li>
+</ul>
+<p>Qexo是一个 <code>美观、强大的静态博客管理器</code>，用于管理Hexo的博客文章</p>
+<h2 id="预先准备"><a href="#预先准备" class="headerlink" title="预先准备"></a>预先准备</h2><ul>
+<li>安装<a href="https://mirrors.tuna.tsinghua.edu.cn/github-release/git-for-windows/git/LatestRelease/">Git</a>、<a href="https://nodejs.org/zh-cn/download/prebuilt-installer">Node.js</a></li>
+<li>一个<a href="https://www.github.com/">Github</a>账号</li>
+<li>一个<a href="https://vercel.com/">Vercel</a>账号</li>
+<li>一个域名（可选）</li>
+</ul>
+<h2 id="本地搭建Hexo"><a href="#本地搭建Hexo" class="headerlink" title="本地搭建Hexo"></a>本地搭建Hexo</h2><h4 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h4><p>首先确保<strong>已经安装Node.js</strong><br>安装hexo的命令行工具和git部署工具，如果拉取速度过慢，自行查阅npm更换国内源</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建本地环境"><a href="#创建本地环境" class="headerlink" title="创建本地环境"></a>创建本地环境</h4><p>创建一个文件夹，用做hexo的根目录并初始化</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir hexo</span><br><span class="line">cd hexo</span><br><span class="line">hexo init</span><br><span class="line">npm install</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2025/07/14/uZTfDmQMapv3PEY.png" alt="初始化hexo"><br>此时文件目录下一些比较重要的文件目录有</p>
+<ul>
+<li><code>./public</code>用于存放生成的静态网页文件</li>
+<li><code>./source</code>博客内容相关源文件，如 <code>./source/_post</code>是博客文章markdown源文件</li>
+<li><code>./theme</code>博客主题</li>
+<li><code>./_config.yml</code>博客配置文件，类似的 <code>./_config.xxx.yml</code>为主题配置文件</li>
+<li>剩余的为环境相关的文件，与博客内容无关</li>
+</ul>
+<p>本地启动测试</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>此时会在本地启动一个临时服务器供用户预览，点击提示链接 <code>http://localhost:4000/</code>访问</p>
+<p><img src="https://s2.loli.net/2025/07/14/WgJxQ6dBYzcnE39.png" alt="测试页面"></p>
+<h3 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h3><p>首先确保<strong>已经安装git</strong>，接下来连接github，请自行确定网络环境以及openssh工具的正常</p>
+<p>配置git</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global user.name &quot;你的Github用户名&quot;</span><br><span class="line">git config --global user.email &quot;你的Github邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成密钥</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/.ssh/</span><br><span class="line">ssh-keygen -t ed25519 -C &quot;你的邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2025/07/14/I3hG5uOiwSnfYQJ.png" alt="生成密钥"></p>
+<p>一路回车就行了，生成的key会保存在你的用户文件夹中的 <code>.ssh</code>文件夹下，公钥为 <code>id_xxx.pub</code>的文件</p>
+<p>接下来登录Github，在 <code>Settings -&gt; SSH and GPG keys -&gt; new SSH keys</code>选择 <code>Authentication Key</code>上传公钥内容</p>
+<p><img src="https://s2.loli.net/2025/07/14/v3FPC9sRV5QtKZW.png" alt="Github上传公钥"></p>
+<p>测试连接</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>确认之后如果有 <code>Hi xxx! ...</code>的输出，就证明已经连接上了github，此时可以访问存储库进行操作</p>
+<p>接着在github上创建一个公有仓库 <code>Blog</code>，用来存放博客静态文件<br><img src="https://s2.loli.net/2025/07/14/cSsBVJ8Hb9fNqxu.jpg" alt="Blog仓库创建"></p>
+<h4 id="配置hexo-deploy"><a href="#配置hexo-deploy" class="headerlink" title="配置hexo-deploy"></a>配置hexo-deploy</h4><p>安装hexo-deploy工具</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>编辑hexo目录中的配置文件 <code>_config.yaml</code>，在末尾加入以下内容（这里使用的）</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:你的用户名/仓库名.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>一键部署至Github</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+
+<p>至此，手动部署的流程已经完成，可以使用以下命令新建文章</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new &quot;新文章&quot;</span><br></pre></td></tr></table></figure>
+
+<p>生成的文章会保存在本地 <code>./source/_post</code>下面，然后使用文本编辑器手动编辑完成后再一键部署至Github</p>
+<h4 id="主题安装-Butterfly"><a href="#主题安装-Butterfly" class="headerlink" title="主题安装(Butterfly)"></a>主题安装(Butterfly)</h4><p>原始的hexo主题如上面的测试页面，hexo还有大量社区维护的主题包，这里只介绍<a href="https://butterfly.js.org/">Butterfly</a>，其余主题请自行搜索安装</p>
+<p>在hexo目录下输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</span><br></pre></td></tr></table></figure>
+
+<p>在hexo根目录下的 <code>_config.yml</code>配置文件中把 <code>theme</code>改为 <code>butterfly</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">butterfly</span></span><br></pre></td></tr></table></figure>
+
+<p>在 hexo 的根目录创建一个文件 <code> _config.butterfly.yml</code>，并把 <code>theme/butterfly</code>主题目录的 _config.yml 内容复制到 <code>_config.butterfly.yml</code> 去。</p>
+<p>到这里Butterfly已经安装完毕，可以继续进行教程，后续主题配置请自行参考butterfly官网在 <code>_config.butterfly.yml</code>中进一步设置</p>
+<h4 id="配置Github-Page"><a href="#配置Github-Page" class="headerlink" title="配置Github Page"></a>配置Github Page</h4><p>进入Github仓库，<code>Settings-&gt;Pages</code>,在 <code>source</code>一栏选择 <code>Deploy from a brach</code>,在下方 <code>branch</code>选择 <code>main-&gt;root</code>，这样设置以后，仓库会在监测到提交后自动把仓库内的静态页面文件部署为Github Page，并免费提供一个子域名访问，如有需要可以在下方 <code>Custom Domain</code>配置自定义域名</p>
+<h2 id="部署Hexo到Github实现自动化"><a href="#部署Hexo到Github实现自动化" class="headerlink" title="部署Hexo到Github实现自动化"></a>部署Hexo到Github实现自动化</h2><p>如前所述，本地部署Hexo是通过在本地编写markdown生成静态页面，再将静态页面推送到Github仓库生成Page. 接下来我们将把Hexo本地部分源文件上传到Github仓库，利用Github Action进一步实现自动化</p>
+<p>首先新建私有仓库 <code>Blog-Source</code>，用于存放Hexo源文件<br><img src="https://s2.loli.net/2025/07/14/YZ8c3KB47uL5SFp.jpg" alt="Blog-Source仓库创建"></p>
+<p>先连接 <code>Blog-Source</code>存储库</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:你的用户名/你的存储库名称.git</span><br></pre></td></tr></table></figure>
+
+<p>连接上后，再复制部分本地hexo文件夹下的必要文件到 <code>Blog-Source</code>下</p>
+<p>建议在此时已经至少选择好主题并下载，此处的 <code>_config.xxx.yml</code>和 <code>themes</code>为主题文件</p>
+<p><img src="https://s2.loli.net/2025/07/14/fDGqlwQxrsL2nJY.jpg" alt="Blog-Source本地文件"></p>
+<h3 id="配置Github-Action"><a href="#配置Github-Action" class="headerlink" title="配置Github Action"></a>配置Github Action</h3><p>首先在Github -&gt; Blog-Source -&gt; Actions 中启用Github Action，再在本地 <code>Blog-Source/.github/workflows</code>下添加一个Github Action的配置文件 <code>main.yml</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Blog</span> <span class="string">CI/CD</span> <span class="comment"># 脚本 workflow 名称</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span> [<span class="string">main</span>, <span class="string">master</span>] <span class="comment"># 当监测 main,master 的 push</span></span><br><span class="line">    <span class="attr">paths:</span> <span class="comment"># 监测所有 source 目录下的文件变动，所有 yml,json 后缀文件的变动。</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;*.json&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;**.yml&#x27;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;**/source/**&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">blog:</span> <span class="comment"># 任务名称</span></span><br><span class="line">    <span class="attr">timeout-minutes:</span> <span class="number">30</span> <span class="comment"># 设置 30 分钟超时</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span> <span class="comment"># 指定最新 ubuntu 系统</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment"># 拉取仓库代码</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span> <span class="comment"># 设置 node.js 环境</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">node_modules</span> <span class="comment"># 缓存 node_modules，提高编译速度，毕竟每月只有 2000 分钟。</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/cache@v4</span> <span class="comment"># 亲测 Github 服务器编译速度比我自己电脑都快，如果每次构建按5分钟计算，我们每个月可以免费部署 400 次，Github yyds！！！</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="attr">cache-name:</span> <span class="string">cache-node-modules</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">~/.npm</span></span><br><span class="line">          <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.os</span> <span class="string">&#125;&#125;-build-$&#123;&#123;</span> <span class="string">env.cache-name</span> <span class="string">&#125;&#125;-$&#123;&#123;</span> <span class="string">hashFiles(&#x27;**/package-lock.json&#x27;)</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.os &#125;&#125;-build-$&#123;&#123; env.cache-name &#125;&#125;-</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.os &#125;&#125;-build-</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.os &#125;&#125;-</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Init</span> <span class="string">Node.js</span> <span class="comment"># 安装源代码所需插件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install</span></span><br><span class="line"><span class="string">          echo &quot;init node successful&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Hexo-cli</span> <span class="string">And</span> <span class="string">component</span> <span class="comment"># 安装 Hexo</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          npm install -g hexo-cli --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-sitemap --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-baidu-sitemap --save</span></span><br><span class="line"><span class="string">          npm install hexo-abbrlink --save</span></span><br><span class="line"><span class="string">          npm install hexo-renderer-pug hexo-renderer-stylus --save</span></span><br><span class="line"><span class="string">          npm i hexo-renderer-markdown-it --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-searchdb</span></span><br><span class="line"><span class="string">          npm install katex @renbaoshuo/markdown-it-katex</span></span><br><span class="line"><span class="string">          npm install hexo-wordcount --save</span></span><br><span class="line"><span class="string">          npm i hexo-filter-nofollow --save</span></span><br><span class="line"><span class="string">          npm install hexo-generator-feed --save</span></span><br><span class="line"><span class="string">          echo &quot;install hexo successful&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Blog</span> <span class="comment"># 编译创建静态博客文件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          hexo clean &amp;&amp; hexo g</span></span><br><span class="line"><span class="string">          echo &quot;build blog successful&quot;</span></span><br><span class="line"><span class="string"></span>      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Blog</span> <span class="comment"># 设置 git 信息并推送静态博客文件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">          cd ./public</span></span><br><span class="line"><span class="string">          git init</span></span><br><span class="line"><span class="string">          git config user.name &quot;$&#123;&#123;secrets.GIT_NAME&#125;&#125;&quot;</span></span><br><span class="line"><span class="string">          git config user.email &quot;$&#123;&#123;secrets.GIT_EMAIL&#125;&#125;&quot;</span></span><br><span class="line"><span class="string">          git add .</span></span><br><span class="line"><span class="string">          git commit -m &quot;Update&quot;</span></span><br><span class="line"><span class="string">          git push --force --quiet &quot;https://$&#123;&#123;secrets.GH_TOKEN&#125;&#125;@$&#123;&#123;secrets.GH_REF&#125;&#125;&quot; master:main</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">echo</span> <span class="string">&quot;Deploy Successful!&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里请注意，由于我直接粘贴的自己的配置文件，所以在名为 <code>Install Hexo-cli And component</code>的任务下方有大量npm包的安装，这些除了前文所述的hexo安装以外，还有额外的一些插件模块，不过由于这些命令直接运行在Github Action的服务器上，所以此处不会产生明显可见的开销，后续搭建完成后自行进一步配置hexo时需要额外插件时请记得在这里检查并加入所需插件</p>
+<h3 id="配置存储库-Secrets"><a href="#配置存储库-Secrets" class="headerlink" title="配置存储库 Secrets"></a>配置存储库 Secrets</h3><p>出于安全考虑，在上方Github Action的配置文件 <code>Deploy Blog</code>中引用了4个 <code>Secret</code>，分别是 <code>GIT_NAME</code>, <code>GIT_EMAIL</code>, <code>GH_TOKEN</code>, <code>GH_REF</code>, 接下来将在存储库中设置它们</p>
+<p>在 Github -&gt; Blog-Source -&gt; Settings -&gt; Secrets and variables -&gt; Actions -&gt; Secrets 中添加用于Github Action的Secrets</p>
+<p><img src="https://s2.loli.net/2025/07/14/jObUyixpge91n7B.png" alt="Blog-Source存储库Secrets配置"></p>
+<p>Secrets的名称分别是上方 <code>GIT_NAME</code>, <code>GIT_EMAIL</code>, <code>GH_TOKEN</code>, <code>GH_REF</code><br>而Secrets的内容 <code>GIT_NAME</code>的就是Github账号的用户名，<code>GIT_EMAIL</code>就是Github账号所使用的邮箱</p>
+<p><code>GH_TOKEN</code>需要在<a href="https://github.com/settings/tokens">Github -&gt; Settings -&gt; Personal Access tokens</a>获取，选择生成 <code>classic</code>的token，为了简便可以把token过期时间设置为永不过期，权限范围勾选repo和workflow</p>
+<p><img src="https://s2.loli.net/2025/07/14/d6SGnAeQZIrmPvL.png" alt="github token配置"></p>
+<p>生成的token即为 <code>GH_TOKEN</code>的内容</p>
+<p><code>GH_REF</code>的内容为 <code>github.com/用户名/Blog仓库名.git</code><br>请注意！！！这里的仓库是之前的用于存放静态页面文件的Blog仓库名称，而不是存放hexo源文件的Blog-Source仓库名</p>
+<p>Secrets设置完毕后可以同步本地Blog-Source更改</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;init&quot;</span><br><span class="line">git push -u</span><br></pre></td></tr></table></figure>
+
+<p>完成之后应该可以在Github -&gt; Blog-Source里面看到刚才的文件， 此时可以编辑本地 &#x2F;Blog-Source&#x2F;source&#x2F;post 里面的文章，再使用上述命令提交，到Github Blog-Source仓库查看Github Action是否正常运行</p>
+<h2 id="通过-Vercel-部署-Qexo"><a href="#通过-Vercel-部署-Qexo" class="headerlink" title="通过 Vercel 部署 Qexo"></a>通过 Vercel 部署 Qexo</h2><h3 id="一键部署"><a href="#一键部署" class="headerlink" title="一键部署"></a>一键部署</h3><p><a href="https://vercel.com/new/clone?repository-url=https://github.com/am-abudu/Qexo"><img src="https://vercel.com/button" alt="vercel deploy"></a><br>首次部署会报错, 请无视并进行接下来的步骤</p>
+<h3 id="配置Vercel-PostgreSQL"><a href="#配置Vercel-PostgreSQL" class="headerlink" title="配置Vercel PostgreSQL"></a>配置Vercel PostgreSQL</h3><p>点击 Storage -&gt; Create Database -&gt; Neon (PostgreSQL)，选择Washington, D.C., USA (East) - iad1位置的数据库，创建完毕后点击Connect Project 连接到你第一步创建的项目</p>
+<p>点击Overview回到刚才创建的项目，Development -&gt; Redeploy，等待配置完成若没有错误即可进入初始化引导</p>
+<p><img src="https://s2.loli.net/2025/07/14/IunJPvcb98Bosy3.png" alt="重新部署qexo"></p>
+<h3 id="自定义Vercel域名"><a href="#自定义Vercel域名" class="headerlink" title="自定义Vercel域名"></a>自定义Vercel域名</h3><p>在上方创建的vercel项目中，点击 Settings-&gt; Domains添加自定义域名，通过CNAME解析到vercel即可使用自定义域名访问</p>
+<h3 id="Qexo初始化配置"><a href="#Qexo初始化配置" class="headerlink" title="Qexo初始化配置"></a>Qexo初始化配置</h3><p><img src="https://s2.loli.net/2025/07/14/oWuPZ3Difygz8qU.png" alt="qexo配置"></p>
+<p>Github密钥即为之前在Blog-Source中Secret填入的 <code>GH_TOKEN</code>的值，没有保存也可按上方再申请一个，这里的Github仓库为存储hexo源文件的仓库，格式为 <code>用户名/仓库名</code>，项目分支 <code>main</code></p>
+<p>设置完毕应该可进入Qexo，至此Blog搭建完成，可以直接在Qexo上撰写文章，有关Qexo和Hexo以及主题的配置，请自行查阅官方网站</p>
+<p><img src="https://s2.loli.net/2025/07/14/xLvIlDpuYqUmMFJ.jpg" alt="qexo主界面"></p>
+<p>最后再来回顾一下此方案的运行过程</p>
+<p><img src="https://s2.loli.net/2025/07/14/sR5cWbK7hjH4LND.png" alt="博客架构流程"></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IP查询-可用的离线IP数据库分享</title>
+    <url>/posts/c7fc2994.html</url>
+    <content><![CDATA[<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>网络对轰、网站分析、服务器搭建……互联网冲浪总是不免接触ip，平时IPIP.NET倒是能满足一天几次的ip查询需求，前一阵子初建mc服务器被国外炸服的猛轰，找一堆IP出来判断登陆位置，结果发现IPIP.NET一天才只能查五次……其他各种各样在线ip查询的准确度又难以分辨，于是开始搜集ip离线数据库，以便在应对以后可能的网络分析大量ip查询请求场景</p>
+<h2 id="IPv4-离线数据库地级市版本-IPIP-NET"><a href="#IPv4-离线数据库地级市版本-IPIP-NET" class="headerlink" title="IPv4 离线数据库地级市版本(IPIP.NET)"></a>IPv4 离线数据库地级市版本(IPIP.NET)</h2><p><img src="https://s2.loli.net/2025/07/14/6FbWCj35LzyhGDn.jpg" alt="IPv4 离线数据库地级市版(IPIP.NET)"></p>
+<p>这是IPIP.NET提供的IPv4 离线数据库地级市免费试用版本，收录的IP数据较少，部分IP甚至连国家都标注不准确，如114.114.114.114的国家地区记录为114DNS</p>
+<p>最后更新时间：20190703</p>
+<p>数据不含运营商，国外只具体到国家，国内到市</p>
+<p><a href="https://www.ipip.net/product/client.html">下载地址</a>  <a href="https://www.ipip.net/support/code.html">调用方法</a></p>
+<h2 id="GeoLite2全球离线数据库（国内不准确）"><a href="#GeoLite2全球离线数据库（国内不准确）" class="headerlink" title="GeoLite2全球离线数据库（国内不准确）"></a>GeoLite2全球离线数据库（国内不准确）</h2><p><img src="https://s2.loli.net/2025/07/14/73DgP5rpfutSNLV.jpg" alt="GeoLite2全球离线数据库"></p>
+<p>GeoLite2离线数据库是由MaxMind提供的免费数据库，在MaxMind官网注册后可自行下载</p>
+<p>包含GeoLite2-City, ASN, Country总共3个数据库</p>
+<p>City提供较为详细的国家城市等信息，也有经纬度信息（经纬度仅供参考，不准）</p>
+<p>ASN数据库则能通过ASN系统组织名推断服务提供商（本数据库不能直接查询ISP）</p>
+<p>Country提供简单的IP国家和国家代码</p>
+<p><a href="https://dev.maxmind.com/geoip/geolite2-free-geolocation-data">下载地址</a>  <a href="https://dev.maxmind.com/geoip/docs/databases/city-and-country/#binary-databases">调用方法</a></p>
+<h2 id="纯真IP离线数据库"><a href="#纯真IP离线数据库" class="headerlink" title="纯真IP离线数据库"></a>纯真IP离线数据库</h2><p><img src="https://s2.loli.net/2025/07/14/k9wArJ3zDXd6G4R.jpg" alt="纯真IP离线数据库"></p>
+<p>纯真(CZ88.NET)自2005年起一直为广大社区用户提供社区版IP地址库，只要获得纯真的授权就能免费使用，并不断获取后续更新的版本。如果有需要免费版IP库的朋友可以前往纯真的官网进行申请。<br>纯真除了免费的社区版IP库外，还提供数据更加准确、服务更加周全的商业版IP地址查询数据。纯真围绕IP地址，基于 网络空间拓扑测绘 + 移动位置大数据 方案，对IP地址定位、IP网络风险、IP使用场景、IP网络类型、秒拨侦测、VPN侦测、代理侦测、爬虫侦测、真人度等均有近20年丰富的数据沉淀。</p>
+<p><a href="https://cz88.net/geo-public">官网申请</a><br><a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=Mzg3Mzc0NTA3NA==&action=getalbum&album_id=2329805780276838401&f">历史版本</a> (仅包含20240710以前)</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>计算机网络</tag>
+        <tag>ip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/4a17b156.html</url>
+    <content><![CDATA[<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World !"></a>Hello World !</h2><h3 id="C-98-C-17"><a href="#C-98-C-17" class="headerlink" title="C++98 - C++17"></a>C++98 - C++17</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namesapce std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;hello world&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-20"><a href="#C-20" class="headerlink" title="C++20"></a>C++20</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;iostream&gt;;</span><br><span class="line"><span class="keyword">import</span> &lt;format&gt;;</span><br><span class="line"><span class="keyword">import</span> &lt;string&gt;;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string world &#123;<span class="string">&quot;world&quot;</span>&#125;;</span><br><span class="line">    cout &lt;&lt; format(<span class="string">&quot;hello &#123;&#125;&quot;</span>,world) &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-23"><a href="#C-23" class="headerlink" title="C++23"></a>C++23</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从C++98到C++23，<br>计算机的旅途正式开始！</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>小C的数字倍数问题（难）</title>
+    <url>/posts/46766b1c.html</url>
+    <content><![CDATA[<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>全世界人的编程水平下降一万倍，只有我的水平保持不变！今天刷题刷上头了，又双叒叕看见一道难题<code>小C的数字倍数问题</code>，是公倍数公约数还是互质？点开定睛一看，居然是难度极高，史上无人能解的倍数难题，这一刻，全世界都炸了锅：”什么？！他居然点开了数字倍数问题，这道题里无比繁杂的数学方法全世界能够掌握的人都寥寥无几！”</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>小U对数字倍数问题很感兴趣，她想知道在区间<code>[l,r]</code>内，有多少个数是<code>a</code>的倍数，或者是<code>b</code>的倍数，或者是<code>c</code>的倍数。你需要帮小U计算出这些数的个数。</p>
+<hr>
+<h3 id="测试样例"><a href="#测试样例" class="headerlink" title="测试样例"></a>测试样例</h3><p><em><strong>样例1：</strong></em></p>
+<blockquote>
+<p>输入：<code>a = 2,b = 3,c = 4,l = 1,r = 10</code><br>输出：<code>7</code></p>
+</blockquote>
+<p><em><strong>样例2：</strong></em></p>
+<blockquote>
+<p>输入：<code>a = 5,b = 7,c = 11,l = 15,r = 100</code><br>输出：<code>34</code></p>
+</blockquote>
+<p><em><strong>样例3：</strong></em></p>
+<blockquote>
+<p>输入：<code>a = 1,b = 1,c = 1,l = 1,r = 1000</code><br>输出：<code>1000</code></p>
+</blockquote>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>看着这道对世人无比复杂的难题，在一片惊呼声中，我打开了侧边栏的MarsCode AI，向他问道：“给我一点思路提示。””是MarsCode AI！早已失传的头部大厂的高科技！他居然能直接在浏览器里命令它，这学生是什么来头？！”只见AI迅速地作出了判断：</p>
+<blockquote>
+<p>好的，让我们来分析一下这个问题。</p>
+<h3 id="问题理解"><a href="#问题理解" class="headerlink" title="问题理解"></a>问题理解</h3><p>你需要计算在区间 <code>[l, r]</code> 内，有多少个数是 <code>a</code> 的倍数，或者是 <code>b</code> 的倍数，或者是 <code>c</code> 的倍数。</p>
+<h3 id="数据结构选择"><a href="#数据结构选择" class="headerlink" title="数据结构选择"></a>数据结构选择</h3><p>这个问题不需要复杂的数据结构，只需要基本的整数运算。</p>
+<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><ol>
+<li><strong>遍历区间</strong>：从 <code>l</code> 到 <code>r</code> 遍历每一个数。</li>
+<li><strong>检查倍数</strong>：对于每一个数，检查它是否是 <code>a</code>、<code>b</code> 或 <code>c</code> 的倍数。</li>
+<li><strong>计数</strong>：如果满足条件，则计数器加一。</li>
+</ol>
+<h3 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h3><ol>
+<li><strong>直接计算倍数</strong>：可以通过直接计算在区间 <code>[l, r]</code> 内 <code>a</code>、<code>b</code>、<code>c</code> 的倍数的个数，然后使用容斥原理来避免重复计数。</li>
+<li><strong>容斥原理</strong>：计算 <code>a</code>、<code>b</code>、<code>c</code> 的倍数的个数，然后减去 <code>a</code> 和 <code>b</code>、<code>a</code> 和 <code>c</code>、<code>b</code> 和 <code>c</code> 的公倍数的个数，再加上 <code>a</code>、<code>b</code>、<code>c</code> 的公倍数的个数。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>你可以选择直接遍历区间并检查每个数是否是 <code>a</code>、<code>b</code> 或 <code>c</code> 的倍数，或者使用容斥原理来优化计算过程。</p>
+<p>希望这些思路对你有帮助！如果你有更多问题，欢迎继续提问。</p>
+</blockquote>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>看见AI的回答后，我的嘴角扬起一抹自信：“哼哼，其实我早就看出解法了，只是验证一下这AI的智商咋样。”  随即我开始劈里啪啦地敲下键盘，一个个英文字符在我的指尖跳动。“难以置信，他的代码能力已经是世界顶级了！”经验丰富的教授大牛也露出了颓然的神情。不到一小时，我就完成了这道难题，刹那间，沧海桑田，黄粱一梦。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">solution</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c, <span class="type">int</span> l, <span class="type">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> ans &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i &#123;l&#125;; i &lt;= r; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % a == <span class="number">0</span> || i % b == <span class="number">0</span> || i % c == <span class="number">0</span>)</span><br><span class="line">            ans++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">10</span>) == <span class="number">7</span>) &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>, <span class="number">100</span>) == <span class="number">34</span>) &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1000</span>) == <span class="number">1000</span>) &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>我在算法课上惊醒，身边的教授无奈地望着我惺忪的睡眼：“说出一个时间复杂度为nlogn的排序算法。” 我信心满满地回答道：“那当然是冒泡排序。”</p>
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>蒜法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最大连续子数组和问题</title>
+    <url>/posts/8017087e.html</url>
+    <content><![CDATA[<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>青训营接近尾声，蒜法蒻媾下个月打算法氵赛，每天一道难题冲冲冲！今天准备复习的是最大连续子数组和问题，众所周知最大连续子数组和的经典解法是Kadane算法，下面来看看题目</p>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>小C拿到了一个数组，他可以进行最多一次操作：将一个元素修改为任意给定的<code>x</code>。小C想知道，经过这次修改后，能够得到的连续子数组的最大和是多少。</p>
+<hr>
+<h3 id="测试样例"><a href="#测试样例" class="headerlink" title="测试样例"></a>测试样例</h3><p><em><strong>样例1：</strong></em></p>
+<blockquote>
+<p>输入：<code>n = 5 ,x = 10 ,a = [5, -1, -5, -3, 2]</code><br>输出：<code>15</code></p>
+</blockquote>
+<p><em><strong>样例2：</strong></em></p>
+<blockquote>
+<p>输入：<code>n = 2 ,x = -3 ,a = [-5, -2]</code><br>输出：<code>-2</code></p>
+</blockquote>
+<p><em><strong>样例3：</strong></em></p>
+<blockquote>
+<p>输入：<code>n = 6 ,x = 10 ,a = [4, -2, -11, -1, 4, -1]</code><br>输出：<code>15</code></p>
+</blockquote>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>首先了解一下Kadane算法的基本思路，Kadane算法是一个经典的用于解决最大连续子数组和的动态规划算法，通过维护更新一个局部最大值和一个全局最大值来得到最优解。这个算法实现也很好理解，一般分为以下两步：</p>
+<p><strong>1. 初始化</strong>： 初始化局部最大变量<code>max_ending_here</code>和全局最大变量<code>max_so_far</code>为数组第一个元素.</p>
+<p><strong>2. 遍历数组</strong>： 遍历数组，若局部最大值加上当前值比局部最大值还要大，则扩展子数组更新最大值，反之从当前元素开始一个新的子数组求和，更新完局部最大值后再把局部最大值和全局最大值比较，更新全局最大值.</p>
+<p>实现完Kadane算法后，这题剩下的步骤就很简单了，再遍历数组一次，依次修改每个元素，计算每次修改后的最大连续子数组和，再恢复修改的元素遍历下一个，直到遍历完成返回最大值。</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">kadane</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp; a)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Kadane算法实现</span></span><br><span class="line">    <span class="type">int</span> max_ending_here = a[<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> max_so_far = a[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; a.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">        max_ending_here = std::<span class="built_in">max</span>(a[i], max_ending_here + a[i]);</span><br><span class="line">        max_so_far = std::<span class="built_in">max</span>(max_so_far, max_ending_here);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max_so_far;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">solution</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> x, std::vector&lt;<span class="type">int</span>&gt; a)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 尝试修改每个元素为x，计算修改后的最大子数组和</span></span><br><span class="line">    <span class="type">int</span> max_sum_with_change = std::numeric_limits&lt;<span class="type">int</span>&gt;::<span class="built_in">min</span>(); <span class="comment">//给个很小的数</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        <span class="type">int</span> original_value = a[i];</span><br><span class="line">        a[i] = x;  <span class="comment">// 修改当前元素为x</span></span><br><span class="line">        <span class="type">int</span> current_max_sum = <span class="built_in">kadane</span>(a);</span><br><span class="line">        max_sum_with_change = std::<span class="built_in">max</span>(max_sum_with_change, current_max_sum);</span><br><span class="line">        a[i] = original_value;  <span class="comment">// 恢复原值</span></span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 返回不修改和修改后的最大子数组和中的最大值</span></span><br><span class="line">    <span class="keyword">return</span> max_sum_with_change;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">5</span>, <span class="number">10</span>, &#123;<span class="number">5</span>, <span class="number">-1</span>, <span class="number">-5</span>, <span class="number">-3</span>, <span class="number">2</span>&#125;) == <span class="number">15</span>) &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">2</span>, <span class="number">-3</span>, &#123;<span class="number">-5</span>, <span class="number">-2</span>&#125;) == <span class="number">-2</span>) &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">6</span>, <span class="number">10</span>, &#123;<span class="number">4</span>, <span class="number">-2</span>, <span class="number">-11</span>, <span class="number">-1</span>, <span class="number">4</span>, <span class="number">-1</span>&#125;) == <span class="number">15</span>) &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; (<span class="built_in">solution</span>(<span class="number">16</span>, <span class="number">1</span>, &#123;<span class="number">17</span>,<span class="number">17</span>,<span class="number">4</span>,<span class="number">13</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">13</span>,<span class="number">7</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">13</span>,<span class="number">6</span>,<span class="number">16</span>,<span class="number">6</span>,<span class="number">11</span>&#125;) == <span class="number">167</span>) &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>洛谷P1563玩具谜题</title>
+    <url>/posts/d4183727.html</url>
+    <content><![CDATA[<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>最近闲来无聊又不想被算法✌薄纱，于是还是尝试性地参加一下算法竞赛，刷到P1563玩具谜题，一听另外一个算法卷王居然没刷这道题，于是好心地出篇题解😆</p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>小南有一套可爱的玩具小人，它们各有不同的职业。</p>
+<p>有一天，这些玩具小人把小南的眼镜藏了起来。小南发现玩具小人们围成了一个圈，它们有的面朝圈内，有的面朝圈外。如下图：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/0u7em9pi.png" alt="示例图"></p>
+<p>这时 singer 告诉小南一个谜题：“眼镜藏在我左数第 3 个玩具小人的右数第 1个玩具小人的左数第 2个玩具小人那里。”</p>
+<p>小南发现，这个谜题中玩具小人的朝向非常关键，因为朝内和朝外的玩具小人的左右方向是相反的：面朝圈内的玩具小人，它的左边是顺时针方向，右边是逆时针方向；而面向圈外的玩具小人，它的左边是逆时针方向，右边是顺时针方向。</p>
+<p>小南一边艰难地辨认着玩具小人，一边数着:</p>
+<p>singer 朝内，左数第 3 个是 archer。</p>
+<p>archer 朝外，右数第 1个是 thinker。</p>
+<p>thinker 朝外，左数第 2 个是 writer。</p>
+<p>所以眼镜藏在 writer 这里！</p>
+<p>虽然成功找回了眼镜，但小南并没有放心。如果下次有更多的玩具小人藏他的眼镜，或是谜题的长度更长，他可能就无法找到眼镜了。所以小南希望你写程序帮他解决类似的谜题。这样的谜題具体可以描述为：</p>
+<p>有 n 个玩具小人围成一圈，已知它们的职业和朝向。现在第 1 个玩具小人告诉小南一个包含 m 条指令的谜題，其中第 Zi 条指令形如“向左数&#x2F;右数第 Si 个玩具小人”。你需要输出依次数完这些指令后，到达的玩具小人的职业。</p>
+<h2 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h2><p>输入的第一行包含两个正整数 n,m，表示玩具小人的个数和指令的条数。</p>
+<p>接下来 n 行，每行包含一个整数和一个字符串，以<em><strong>逆时针为顺序</strong></em>给出每个玩具小人的朝向和职业。其中 0 表示朝向圈内，1表示朝向圈外。保证不会出现其他的数。字符串长度不超过 10 且仅由英文字母构成，字符串不为空，并且字符串两两不同。整数和字符串之间用一个空格隔开。</p>
+<p>接下来 <strong>m</strong> 行，其中第 <strong>i</strong> 行包含两个整数 ai ,si，表示第 <strong>i</strong> 条指令。若<strong>ai</strong>&#x3D;<strong>0</strong>，表示向左数 <strong>s</strong>i 个人；若 <strong>a</strong>i&#x3D;1，表示向右数 si 个人。 保证 ai 不会出现其他的数，1≤si&lt;n。</p>
+<h2 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h2><p>输出一个字符串，表示从第一个读入的小人开始，依次数完 <strong>m</strong> 条指令后到达的小人的职业。</p>
+<h2 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h2><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7 3</span><br><span class="line">0 singer</span><br><span class="line">0 reader</span><br><span class="line">0 mengbier </span><br><span class="line">1 thinker</span><br><span class="line">1 archer</span><br><span class="line">0 writer</span><br><span class="line">1 mogician </span><br><span class="line">0 3</span><br><span class="line">1 1</span><br><span class="line">0 2</span><br></pre></td></tr></table></figure>
+
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">writer</span><br></pre></td></tr></table></figure>
+
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,m;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="type">int</span> index &#123;&#125;; <span class="comment">//设置起始下标为0</span></span><br><span class="line">    pair&lt;<span class="type">int</span>,string&gt; arr[n];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i&#123;&#125;; i &lt; n; ++i) <span class="comment">//循环读入</span></span><br><span class="line">    &#123;</span><br><span class="line">        cin &gt;&gt; arr[i].first &gt;&gt; arr[i].second;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i&#123;&#125;; i &lt; m; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> direction,num;</span><br><span class="line">        cin &gt;&gt; direction &gt;&gt; num; </span><br><span class="line">        <span class="keyword">if</span> (direction == <span class="number">0</span>) <span class="comment">//向左数</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[index].first == <span class="number">0</span>) <span class="comment">//当前小人朝内</span></span><br><span class="line">            &#123;</span><br><span class="line">                index -= num; <span class="comment">//向左数n个</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">//当前小人朝外</span></span><br><span class="line">                index += num;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">//向右数</span></span><br><span class="line">            <span class="keyword">if</span> (arr[index].first == <span class="number">0</span>) <span class="comment">//当前小人朝内</span></span><br><span class="line">            &#123;</span><br><span class="line">                index += num;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123; <span class="comment">//当前小人朝外</span></span><br><span class="line">                index -= num;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (index &lt; <span class="number">0</span>) <span class="comment">//若下标向下越界</span></span><br><span class="line">            index = n + index; </span><br><span class="line">        <span class="keyword">while</span> (index &gt; n<span class="number">-1</span>) <span class="comment">//若下标向上越界</span></span><br><span class="line">            index = index - n;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; arr[index].second &lt;&lt; endl; <span class="comment">//输出更新完毕最后的下标内容</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>现代安全DNS之DOH</title>
+    <url>/posts/47a7cd7d.html</url>
+    <content><![CDATA[<h3 id="DNS简述"><a href="#DNS简述" class="headerlink" title="DNS简述"></a>DNS简述</h3><p>域名系统(Domain Name System)是互联网的一项服务，它是域名与IP地址进行相互映射的层次结构分布式数据库。我们这里讨论的主要是DNS协议，即向域名系统进行查询域名所指向地址的协议，DNS协议通常使用TCP&#x2F;UDP的53端口向DNS服务器进行查询，而DNS服务器会向域名所在的权威名称服务器进行递归查询，得到对应的IP地址后返回给用户，用户再和IP地址的服务器建立连接。现代大多数网站以及互联网连接都带有域名，所以设置合适的DNS服务器几乎成为上网冲浪第一步。</p>
+<h3 id="我们都在用哪些DNS服务器"><a href="#我们都在用哪些DNS服务器" class="headerlink" title="我们都在用哪些DNS服务器"></a>我们都在用哪些DNS服务器</h3><p>大多数情况下，我们所使用的网络都有运营商提供的默认DNS服务器，因此没有手动设置DNS服务器也能正常访问互联网。然而在某些情况下，如运营商DNS服务器异常中断服务、用户希望获得更可靠的DNS服务等等，我们需要手动设置DNS服务器。</p>
+<p>常用的DNS服务器有:</p>
+<ul>
+<li>运营商默认DNS服务器</li>
+<li>114 DNS<br>ipv4: <code>114.114.114.114</code></li>
+<li>阿里云DNS<br>ipv4:  <code>223.5.5.5</code><br>ipv6: <code>2400:3200::1</code></li>
+<li>腾讯云DNSPOD<br>ipv4: <code>119.29.29.29</code><br>ipv6: <code>2402:4e00::</code></li>
+<li>百度DNS<br>ipv4: <code>180.76.76.76</code><br>ipv6: <code>2400:da00::6666</code></li>
+<li>Google DNS<br>ipv4: <code>8.8.8.8</code><br>ipv6: <code>2001:4860:4860::8888</code></li>
+<li>Cloudflare DNS<br>ipv4: <code>1.1.1.1</code><br>ipv6: <code>2606:4700:4700::1111</code></li>
+</ul>
+<p>需要注意，错误的DNS设置会导致无法正常上网，此时更换其他DNS服务器或者切换回运营商默认服务器即可。</p>
+<h3 id="DOT-DOH是什么"><a href="#DOT-DOH是什么" class="headerlink" title="DOT&#x2F;DOH是什么?"></a>DOT&#x2F;DOH是什么?</h3><p>正如前面提到的，用户默认使用运营商提供的服务器，加上传统DNS协议没有经过加密，因此运营商可以对用户请求进行分析，甚至劫持用户请求(返回错误的IP地址或者引导到无关IP地址)。</p>
+<p>得益于现代加密技术，DNS协议获得了升级。DOT(DNS over TLS)和DOH(DNS over HTTPS)是使用现代加密的DNS协议，顾名思义，DOT和DOH都使用TLS证书对DNS请求进行加密，相比DOT，DOH则是将DNS请求封装为更泛化的通用HTTPS请求。通过DOT&#x2F;DOH，用户可以更加私密地访问互联网，而不用担心请求泄露和劫持.</p>
+<p>目前国内提供DOT&#x2F;DOH的主要是腾讯DNSPOD和阿里云公共DNS，国外有Google、Cloudflare等的服务:</p>
+<ul>
+<li>阿里云公共DNS<br>DOT: <code>dns.alidns.com</code><br>DOH: <code>https://dns.alidns.com/dns-query</code></li>
+<li>腾讯PODDNS<br>DOT: <code>dot.pub</code><br>DOH: <code>https://doh.pub/dns-query</code></li>
+<li>Google DNS<br>DOT: <code>dns.google</code><br>DOH: <code>https://dns.google/dns-query</code></li>
+<li>Cloudflare DNS<br>DOT: <code>cloudflare-dns.com</code><br>DOH: <code>https://cloudflare-dns.com/dns-query</code></li>
+</ul>
+<h3 id="如何设置DOT-DOH"><a href="#如何设置DOT-DOH" class="headerlink" title="如何设置DOT&#x2F;DOH?"></a>如何设置DOT&#x2F;DOH?</h3><ul>
+<li>一般Android设备(Android 9+)支持DOT，在 <code>系统设置-&gt;连接与共享-&gt;私人DNS</code>中“私人DNS提供商主机名”</li>
+<li>最新 Windows 11已经原生支持DOH，需要在 <code>网络-&gt;属性-&gt;编辑DNS服务器-&gt;设置自定义模板</code></li>
+<li>主流桌面浏览器Chrome, Edge, Firefox均支持DOH，移动浏览器有部分如Chromium的移动版对DOH提供支持</li>
+</ul>
+<h3 id="设置DOT-DOH后网络出现问题？"><a href="#设置DOT-DOH后网络出现问题？" class="headerlink" title="设置DOT&#x2F;DOH后网络出现问题？"></a>设置DOT&#x2F;DOH后网络出现问题？</h3><p>需要注意以下事项:</p>
+<ul>
+<li>DOT&#x2F;DOH存在一定开销，加密连接需要和DNS服务器多次TLS握手，相比原始的DNS请求效率较低，尤其是在不稳定的网络环境中</li>
+<li>在某些特定情境下(如校园网或者单位网络等)需要登录的场景，如果登录页面网站是内网DNS解析的域名访问，使用DOT&#x2F;DOH会导致无法登录上网，需要手动关闭</li>
+<li>在使用代理时也可能出现DOT&#x2F;DOH设置导致无法上网的情况，请检查所使用代理的DNS设置是否与DOT&#x2F;DOH冲突，或者关闭DOT&#x2F;DOH</li>
+<li>如使用国外DOT&#x2F;DOH可能无法正常连接</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>DNS</tag>
+      </tags>
+  </entry>
+</search>

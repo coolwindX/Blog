@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>清風の小窝</title>
+  
+  <subtitle>一条咸鱼的碎碎念</subtitle>
+  <link href="https://blog.coolwind.top/atom.xml" rel="self"/>
+  
+  <link href="https://blog.coolwind.top/"/>
+  <updated>2025-07-16T00:01:44.653Z</updated>
+  <id>https://blog.coolwind.top/</id>
+  
+  <author>
+    <name>暮色清風</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>现代安全DNS之DOH</title>
+    <link href="https://blog.coolwind.top/posts/47a7cd7d.html"/>
+    <id>https://blog.coolwind.top/posts/47a7cd7d.html</id>
+    <published>2025-03-11T01:25:05.970Z</published>
+    <updated>2025-07-16T00:01:44.653Z</updated>
+    
+    
+    <summary type="html">&lt;think&gt; 好的，我需要为这篇关于DNS的博客文章写一个摘要。首先，我得通读全文，抓住核心主题。文章主要介绍DNS系统，它的作用是将域名转换为IP地址，使用TCP/UDP 53端口，以及DNS查询的过程，包括递归查询到权威服务器。然后，文章讨论了常用的DNS服务器，比如运营商默认的、114 DNS、阿里云和腾讯云的，并提到手动设置DNS的原因，比如提高可靠性或解决运营商问题。  接下来，我需要确定关键观点。DNS是互联网的基础服务，负责域名解析，用户通常使用运营商提供的DNS，但在某些情况下需要手动更换。不同的公共DNS服务可能提供更好的性能或可靠性。此外，正确设置DNS对上网体验很重要。  然后，检查是否有重要结论或建议。文章建议在运营商DNS出现问题时更换为公共DNS，并列举了几个推荐的服务器地址。可能还需要提到IPv4和IPv6的支持情况。  现在，组织语言，确保在100-200字之间。开头点明DNS的作用和机制，然后说明用户通常使用默认DNS，但有时需要手动设置，列举常用选项，最后总结设置合适DNS的重要性。注意不要遗漏端口号、递归查询过程，以及提到的具体DNS服务商和地址。  需要确认是否所有重要信息都被涵盖，比如DNS协议使用的端口，递归查询过程，更换DNS的原因，以及具体的例子。避免技术细节过多，保持简洁。可能还需要提到DNS服务器的选择对网络体验的影响，比如速度和可靠性。  最后，检查语言是否流畅，是否符合摘要的要求，没有冗余，信息准确。确保没有错误，比如端口号正确，DNS服务器地址正确。完成后，再通读一遍，确保覆盖所有要点。 &lt;/think&gt;  本文系统介绍了域名系统（DNS）的核心机制及其实际应用。DNS作为互联网关键基础设施，通过将域名与IP地址映射实现网络资源定位，其协议基于TCP/UDP 53端口进行查询，采用递归查询机制从权威服务器获取目标地址。文章指出，尽管用户通常依赖运营商提供的默认DNS服务，但在服务器故障或追求更优服务时，手动配置可靠DNS成为必要选择。文中列举了主流公共DNS服务，包括114 DNS（114.114.114.114）、阿里云（223.5.5.5/2400:3200::1）和腾讯云（119.29.29.29）等，强调合理选择DNS对提升网络连接速度、稳定性和安全性的重要性。最终建议用户根据实际需求，在默认服务异常时主动切换至优质公共DNS，以优化上网体验。</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="DNS" scheme="https://blog.coolwind.top/tags/DNS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo+Qexo部署---从零开始搭建Blog</title>
+    <link href="https://blog.coolwind.top/posts/32d09259.html"/>
+    <id>https://blog.coolwind.top/posts/32d09259.html</id>
+    <published>2025-03-02T00:24:05.769Z</published>
+    <updated>2025-03-04T03:34:18.181Z</updated>
+    
+    
+    <summary type="html">使用Github Page和Vercel部署Hexo + Qexo，零成本搭建小白的首个博客！</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="blog" scheme="https://blog.coolwind.top/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小C的数字倍数问题（难）</title>
+    <link href="https://blog.coolwind.top/posts/46766b1c.html"/>
+    <id>https://blog.coolwind.top/posts/46766b1c.html</id>
+    <published>2024-11-28T05:08:37.813Z</published>
+    <updated>2024-11-28T05:08:38.661Z</updated>
+    
+    
+    <summary type="html">全世界人的编程水平下降一万倍，只有我的水平保持不变！今天刷题刷上头了，又双叒叕看见一道难题`小C的数字倍数问题`，是公倍数公约数还是互质？点开定睛一看，居然是难度极高，史上无人能解的倍数难题，这一刻，全世界都炸了锅：&quot;什么？！他居然点开了数字倍数问题，这道题里无比繁杂的数学方法全世界能够掌握的人都寥寥无几！&quot;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://blog.coolwind.top/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="蒜法" scheme="https://blog.coolwind.top/tags/%E8%92%9C%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最大连续子数组和问题</title>
+    <link href="https://blog.coolwind.top/posts/8017087e.html"/>
+    <id>https://blog.coolwind.top/posts/8017087e.html</id>
+    <published>2024-11-28T04:10:49.611Z</published>
+    <updated>2024-11-28T04:21:09.062Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="算法" scheme="https://blog.coolwind.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="动态规划" scheme="https://blog.coolwind.top/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IP查询-可用的离线IP数据库分享</title>
+    <link href="https://blog.coolwind.top/posts/c7fc2994.html"/>
+    <id>https://blog.coolwind.top/posts/c7fc2994.html</id>
+    <published>2024-07-24T04:43:35.290Z</published>
+    <updated>2024-09-14T20:06:33.423Z</updated>
+    
+    
+    <summary type="html">几个实用的离线数据库，包括IPIP.NET, GeoLite2, 纯真IP</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="计算机网络" scheme="https://blog.coolwind.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    <category term="ip" scheme="https://blog.coolwind.top/tags/ip/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>洛谷P1563玩具谜题</title>
+    <link href="https://blog.coolwind.top/posts/d4183727.html"/>
+    <id>https://blog.coolwind.top/posts/d4183727.html</id>
+    <published>2024-01-15T23:54:34.278Z</published>
+    <updated>2024-09-14T19:55:47.643Z</updated>
+    
+    
+    <summary type="html">洛谷P1563玩具谜题简单题解</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C++" scheme="https://blog.coolwind.top/tags/C/"/>
+    
+    <category term="算法" scheme="https://blog.coolwind.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://blog.coolwind.top/posts/4a17b156.html"/>
+    <id>https://blog.coolwind.top/posts/4a17b156.html</id>
+    <published>2024-01-11T05:39:29.000Z</published>
+    <updated>2024-09-17T22:38:50.595Z</updated>
+    
+    
+    <summary type="html">从C++98到C++23，C++见证计算机语言发展历程</summary>
+    
+    
+    
+    <category term="技术" scheme="https://blog.coolwind.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C++" scheme="https://blog.coolwind.top/tags/C/"/>
+    
+  </entry>
+  
+</feed>
